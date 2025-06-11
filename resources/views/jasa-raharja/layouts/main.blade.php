@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
   
-        <title>{{ $title ?? 'PADUKA' }}</title>
-        <link rel="icon" href="{{ asset('img/logo/logo-jasaraharja.png') }}">
+        <title>Jasa Raharja | PADUKA</title>
+        <link rel="icon" href="{{ asset('img/jasa-raharja/logo/logo-paduka.png') }}">
 
         {{-- CDN --}}
         <script src="https://kit.fontawesome.com/d7833bfda5.js" crossorigin="anonymous"></script>

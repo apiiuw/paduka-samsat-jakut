@@ -12,6 +12,9 @@ module.exports = {
         blueJR: "#006AB2",
         blueJRdark: "#00548C",
       },
+      fontFamily: {
+        'jakartaSans': ["'Plus Jakarta Sans'", 'sans-serif'],
+      },
     },
   },
   plugins: [

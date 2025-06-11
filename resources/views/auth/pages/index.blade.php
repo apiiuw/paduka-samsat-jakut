@@ -1,18 +1,30 @@
 @extends('auth.layouts.main')
 @section('container')
 
-<div class="relative bg-cover bg-center min-h-screen flex flex-col items-center justify-center" style="background-image: url('/img/background/bg-sign-in.png')">
+<div class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
 
-    <!-- Overlay Gelap -->
-    <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
-
-    <!-- Logo Sampingan (Kiri dan Kanan) -->
-    <div class="relative z-10 flex justify-center items-center space-x-4 mb-6">
-        <img src="/img/jasa-raharja/logo/logo-paduka.png" alt="Logo Paduka" class="h-20 object-contain shadow-md">
-        <img src="/img/unit-laka-samsat/logo/logo-samsat.png" alt="Logo Polisi" class="h-20 object-contain shadow-md">
+    <!-- YouTube Video Background -->
+    <div class="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full">
+            <!-- Background Video -->
+            <video autoplay muted loop playsinline class="absolute top-0 left-0 w-full h-full object-cover -z-10">
+                <source src="{{ asset('vid//background/bg-sign-in.mp4') }}" type="video/mp4">
+                Browser kamu tidak mendukung video background.
+            </video>
+        </div>
     </div>
 
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm z-10">
+    <!-- Overlay Gelap -->
+    <div class="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+
+    <!-- Logo -->
+    <div class="relative z-20 flex justify-center items-center space-x-4 mb-6">
+        <img src="/img/jasa-raharja/logo/logo-paduka.png" alt="Logo Paduka" class="h-20 object-contain">
+        <img src="/img/unit-laka-samsat/logo/logo-samsat.png" alt="Logo Polisi" class="h-20 object-contain">
+    </div>
+
+    <!-- Login Box -->
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm z-20">
         <div class="flex flex-col items-center mb-6">
             <h1 class="text-3xl font-semibold text-center mb-2">Masuk Akun</h1>
             <p class="text-center text-sm text-gray-600">Penghapusan Data Kendaraan Melalui Asuransi Umum Unit Laka Lantas Polri</p>
@@ -43,7 +55,6 @@
             </div>
         </form>
     </div>
-
 </div>
 
 @endsection

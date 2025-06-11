@@ -18,6 +18,7 @@ Route::get('/sign-in', function () {
     return view('auth.pages.index');
 });
 
+
 // JR Kanwil DKI Jakarta
 Route::get('/jr-statistik-laporan', function () {
     return view('jasa-raharja.pages.statistik-laporan.index');
@@ -30,6 +31,21 @@ Route::get('/jr-data-laporan', function () {
 Route::get('/jr-data-hasil-survei', function () {
     return view('jasa-raharja.pages.data-hasil-survei.index');
 });
+
+
+// Petugas Surveyor
+Route::get('/surveyor-data-survei', function () {
+    return view('surveyor.pages.data-survei.index');
+});
+
+Route::get('/surveyor-data-hasil-survei', function () {
+    return view('surveyor.pages.data-hasil-survei.index');
+});
+
+Route::get('/surveyor-input-data-survei', function () {
+    return view('surveyor.pages.input-data-survei.index');
+});
+
 
 // Unit Laka Samsat Jakut
 Route::get('/unit-laka-statistik-kendaraan', function () {
