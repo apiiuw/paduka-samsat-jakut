@@ -12,9 +12,9 @@
       <div class="flex items-center">
           <div class="flex items-center ms-3">
             <div>
-              <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-[#ECF3F7]" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+              <button type="button" class="flex rounded-full focus:ring-4 focus:ring-[#ECF3F7] text-5xl" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
-                <i class=" flex flex-col justify-center items-center fa-solid fa-circle-user text-[#373D53] fa-2xl w-10 h-10 rounded-full"></i>
+                <i class=" flex flex-col justify-center items-center fa-solid fa-circle-user text-[#373D53] w-10 h-10 rounded-full"></i>
               </button>
             </div>
             <div class="z-50 hidden my-4 text-base list-none bg-[#373D53] divide-y divide-[#ADB7C1] rounded-sm shadow-sm" id="dropdown-user">
