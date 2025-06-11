@@ -1,103 +1,65 @@
 @extends('jasa-raharja.layouts.main')
 @section('container')
 
-<div class="p-4 sm:ml-64 bg-[#ECF3F7]">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-24">
-      <div class="grid grid-cols-3 gap-4 mb-4">
-         <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
+<div class="p-4 sm:ml-64 bg-[#ECF3F7] min-h-screen">
+   <div class="p-4 mt-24">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+         <!-- Total Data Kendaraan -->
+         <div class="bg-blueJR text-white p-5 py-10 rounded-lg shadow-md flex justify-between items-center">
+            <div>
+                  <p class="text-sm">Total Laporan</p>
+                  <p class="text-2xl font-bold">145</p>
+            </div>
+            <div class="text-6xl">
+                  <i class="fa-solid fa-file"></i>
+            </div>
          </div>
-         <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
+
+         <!-- Total Perkara Selesai -->
+         <div class="bg-green-600 text-white p-5 py-10 rounded-lg shadow-md flex justify-between items-center">
+            <div>
+                  <p class="text-sm">Total Hasil Survei</p>
+                  <p class="text-2xl font-bold">30</p>
+            </div>
+            <div class="text-6xl">
+                  <i class="fas fa-briefcase"></i>
+            </div>
          </div>
-         <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded-sm bg-gray-50">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
+
+         <!-- Total Perkara Belum Selesai -->
+         <div class="bg-red-600 text-white p-5 py-10 rounded-lg shadow-md flex justify-between items-center">
+            <div>
+                  <p class="text-sm">Total Perkara Belum Survei</p>
+                  <p class="text-2xl font-bold">115</p>
+            </div>
+            <div class="text-6xl">
+                  <i class="fa-solid fa-business-time"></i>
+            </div>
          </div>
       </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded-sm bg-gray-50">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
+
+      <div class="bg-white w-full rounded-xl shadow-md p-6 my-5">
+         <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-800">Grafik Laporan Masuk</h2>
+            <select class="border border-gray-300 text-sm rounded-md p-2">
+               <option>2025/2026</option>
+               <option>2024/2025</option>
+               <!-- Tambahkan opsi tahun lainnya di sini -->
+            </select>
          </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
+
+         <hr class="bg-[#E8EEF2] h-[2px] my-4">
+
+         <!-- Tempat untuk grafik nantinya -->
+         <div class="h-64 bg-gray-100 flex items-center justify-center text-gray-400">
+            Grafik akan ditampilkan di sini
          </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
+
+         <div class="flex justify-end mt-4">
+            <button class="bg-blueJR text-white px-4 py-2 rounded hover:bg-blueJRdark">
+               Unduh Laporan
+            </button>
          </div>
       </div>
    </div>
