@@ -81,6 +81,7 @@
          <th class="border px-2 py-1">Nama Tersangka</th>
          <th class="border px-2 py-1">Jenis Kendaraan</th>
          <th class="border px-2 py-1">Nomor Polisi</th>
+         <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
          <th class="border px-2 py-1">Total Kerugian</th>
          <th class="border px-2 py-1">Kode Penyidik</th>
          <th class="border px-2 py-1">Foto Barang Bukti</th>
@@ -91,12 +92,13 @@
       <tbody class="bg-white">
          <tr class="border-t text-center">
             <td class="border px-2 py-1">1</td>
-            <td class="border px-2 py-1">LP/1432/S/VI/2025</td>
+            <td class="border px-2 py-1 whitespace-nowrap">LP/1432/S/VI/2025</td>
             <td class="border px-2 py-1">01/06/2025</td>
             <td class="border px-2 py-1">Nurhasan</td>
             <td class="border px-2 py-1">Nurhasan</td>
             <td class="border px-2 py-1">Roda 2</td>
-            <td class="border px-2 py-1">B 8421 TKM</td>
+            <td class="border px-2 py-1 whitespace-nowrap">B 8421 TKM</td>
+            <td class="border px-2 py-1">24/12/2027</td>
             <td class="border px-2 py-1">Rp10.000.000</td>
             <td class="border px-2 py-1">T.4</td>
             <td class="border px-2 py-1 flex justify-center">
@@ -107,12 +109,13 @@
          </tr>
          <tr class="border-t text-center">
             <td class="border px-2 py-1">2</td>
-            <td class="border px-2 py-1">LP/1432/S/VI/2025</td>
+            <td class="border px-2 py-1 whitespace-nowrap">LP/1432/S/VI/2025</td>
             <td class="border px-2 py-1">01/06/2025</td>
             <td class="border px-2 py-1">Nurhasan</td>
             <td class="border px-2 py-1">Nurhasan</td>
             <td class="border px-2 py-1">Roda 2</td>
-            <td class="border px-2 py-1">B 8421 TKM</td>
+            <td class="border px-2 py-1 whitespace-nowrap">B 8421 TKM</td>
+            <td class="border px-2 py-1">24/12/2027</td>
             <td class="border px-2 py-1">Rp10.000.000</td>
             <td class="border px-2 py-1">T.4</td>
             <td class="border px-2 py-1 flex justify-center">

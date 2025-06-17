@@ -10,25 +10,25 @@
       </div>
       <ul class="space-y-2 font-medium">
          <li>
-            <a href="/surveyor-data-survei" 
+            <a href="/surveyor/data-survei" 
                class="flex items-center p-2 rounded-lg group
-                  {{ request()->is('surveyor-data-survei') ? 'text-white bg-blueJR' : 'text-[#ADB7C1] hover:text-white hover:bg-blueJRdark' }}">
+                  {{ request()->is('surveyor/data-survei') ? 'text-white bg-blueJR' : 'text-[#ADB7C1] hover:text-white hover:bg-blueJRdark' }}">
                <i class="fa-solid fa-car fa-lg transition duration-75 group-hover:text-white"></i>
                <span class="flex-1 ms-3 whitespace-nowrap">Data Wajib Survei</span>
             </a>
          </li>
          <li>
-            <a href="/surveyor-data-hasil-survei" 
+            <a href="/surveyor/data-hasil-survei" 
                class="flex items-center p-2 rounded-lg group
-                  {{ request()->is('surveyor-data-hasil-survei') ? 'text-white bg-blueJR' : 'text-[#ADB7C1] hover:text-white hover:bg-blueJRdark' }}">
+                  {{ request()->is('surveyor/data-hasil-survei') ? 'text-white bg-blueJR' : 'text-[#ADB7C1] hover:text-white hover:bg-blueJRdark' }}">
                <i class="fa-solid fa-file fa-lg transition duration-75 group-hover:text-white"></i>
                <span class="flex-1 ms-3 whitespace-nowrap">Data Hasil Survei</span>
             </a>
          </li>
          <li>
-            <a href="/surveyor-input-data-survei" 
+            <a href="/surveyor/input-data-survei" 
                class="flex items-center p-2 rounded-lg group
-                  {{ request()->is('surveyor-input-data-survei') ? 'text-white bg-blueJR' : 'text-[#ADB7C1] hover:text-white hover:bg-blueJRdark' }}">
+                  {{ request()->is('surveyor/input-data-survei') ? 'text-white bg-blueJR' : 'text-[#ADB7C1] hover:text-white hover:bg-blueJRdark' }}">
                <i class="fa-solid fa-square-plus fa-lg transition duration-75 group-hover:text-white"></i>
                <span class="flex-1 ms-3 whitespace-nowrap">Input Data Survei</span>
             </a>
