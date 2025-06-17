@@ -19,16 +19,27 @@
             </div>
             <div class="z-50 hidden my-4 text-base list-none bg-[#373D53] divide-y divide-[#ADB7C1] rounded-sm shadow-sm" id="dropdown-user">
               <div class="px-4 py-3" role="none">
-                <p class="text-sm text-[#ADB7C1]" role="none">
-                  Unit Laka Lantas SAMSAT Jakut
-                </p>
-                <p class="text-sm font-medium text-[#ADB7C1] truncate" role="none">
-                  unitlakasamsat@gmail.com
-                </p>
+                @auth
+                  <p class="text-sm text-[#ADB7C1]" role="none">
+                    {{ Auth::user()->name }}
+                  </p>
+                  <p class="text-sm font-medium text-[#ADB7C1] truncate" role="none">
+                    {{ Auth::user()->email }}
+                  </p>
+                @else
+                  <p class="text-sm text-[#ADB7C1]" role="none">
+                    Guest
+                  </p>
+                @endauth
               </div>
               <ul class="py-1" role="none">
                 <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-[#ADB7C1] hover:bg-red-600 hover:text-white" role="menuitem">Sign out</a>
+                  <form action="{{ route('signOut') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-[#ADB7C1] hover:bg-red-600 hover:text-white">
+                      Sign out
+                    </button>
+                  </form>
                 </li>
               </ul>
             </div>

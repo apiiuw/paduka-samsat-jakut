@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\SignInController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,49 +14,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Auth
-Route::get('/sign-in', function () {
-    return view('auth.pages.index');
-});
+// AUTH
+Route::get('/sign-in', [SignInController::class, 'showSignInForm'])->name('signIn');
+Route::post('/sign-in', [SignInController::class, 'signIn']);
+Route::post('/sign-out', [SignInController::class, 'signOut'])->name('signOut');
 
-
+// ==========================
 // JR Kanwil DKI Jakarta
-Route::get('/jr-statistik-laporan', function () {
-    return view('jasa-raharja.pages.statistik-laporan.index');
+// ==========================
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/jr-statistik-laporan', fn () => view('jasa-raharja.pages.statistik-laporan.index'));
+    Route::get('/jr-data-laporan', fn () => view('jasa-raharja.pages.data-laporan.index'));
+    Route::get('/jr-data-hasil-survei', fn () => view('jasa-raharja.pages.data-hasil-survei.index'));
 });
 
-Route::get('/jr-data-laporan', function () {
-    return view('jasa-raharja.pages.data-laporan.index');
-});
-
-Route::get('/jr-data-hasil-survei', function () {
-    return view('jasa-raharja.pages.data-hasil-survei.index');
-});
-
-
+// ==========================
 // Petugas Surveyor
-Route::get('/surveyor-data-survei', function () {
-    return view('surveyor.pages.data-survei.index');
+// ==========================
+Route::middleware(['auth', 'role:surveyor'])->group(function () {
+    Route::get('/surveyor-data-survei', fn () => view('surveyor.pages.data-survei.index'));
+    Route::get('/surveyor-data-hasil-survei', fn () => view('surveyor.pages.data-hasil-survei.index'));
+    Route::get('/surveyor-input-data-survei', fn () => view('surveyor.pages.input-data-survei.index'));
 });
 
-Route::get('/surveyor-data-hasil-survei', function () {
-    return view('surveyor.pages.data-hasil-survei.index');
-});
-
-Route::get('/surveyor-input-data-survei', function () {
-    return view('surveyor.pages.input-data-survei.index');
-});
-
-
+// ==========================
 // Unit Laka Samsat Jakut
-Route::get('/unit-laka-statistik-kendaraan', function () {
-    return view('unit-laka-samsat-jakut.pages.statistik-kendaraan.index');
-});
-
-Route::get('/unit-laka-data-kendaraan', function () {
-    return view('unit-laka-samsat-jakut.pages.data-kendaraan.index');
-});
-
-Route::get('/unit-laka-input-data-kendaraan', function () {
-    return view('unit-laka-samsat-jakut.pages.input-data-kendaraan.index');
+// ==========================
+Route::middleware(['auth', 'role:unit laka'])->group(function () {
+    Route::get('/unit-laka-statistik-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.statistik-kendaraan.index'));
+    Route::get('/unit-laka-data-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.data-kendaraan.index'));
+    Route::get('/unit-laka-input-data-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.input-data-kendaraan.index'));
 });
