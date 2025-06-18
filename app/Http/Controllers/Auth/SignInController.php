@@ -21,11 +21,11 @@ class SignInController extends Controller
             $user = Auth::user();
             // Redirect sesuai role
             if ($user->role === 'admin') {
-                return redirect('/jr-statistik-laporan')->with('success', 'Berhasil masuk sebagai Admin Jasa Raharja.');
+                return redirect('/jr/statistik-laporan')->with('success', 'Berhasil masuk sebagai Admin Jasa Raharja.');
             } elseif ($user->role === 'unit laka') {
-                return redirect('/unit-laka-statistik-kendaraan')->with('success', 'Berhasil masuk sebagai Unit Laka.');
+                return redirect('/unit-laka/statistik-kendaraan')->with('success', 'Berhasil masuk sebagai Unit Laka.');
             } elseif ($user->role === 'surveyor') {
-                return redirect('/surveyor-data-survei')->with('success', 'Berhasil masuk sebagai Surveyor.');
+                return redirect('/surveyor/data-survei')->with('success', 'Berhasil masuk sebagai Surveyor.');
             }
         }
 

@@ -43,7 +43,9 @@ Route::middleware(['auth', 'role:surveyor'])->group(function () {
 // ==========================
 Route::middleware(['auth', 'role:unit laka'])->group(function () {
     Route::get('/unit-laka/statistik-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.statistik-kendaraan.index'));
-    Route::get('/unit-laka/data-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.data-kendaraan.index'));
+    Route::get('/unit-laka/data-kendaraan', [ULSDataKendaraanController::class, 'index'])->name('data-kendaraan.index');
+    Route::get('/unit-laka/data-kendaraan/unduh', [ULSDataKendaraanController::class, 'unduh'])->name('data-kendaraan.unduh');
+    Route::put('/unit-laka/data-kendaraan/status-perkara/{id}', [ULSDataKendaraanController::class, 'updateStatus'])->name('data-kendaraan-status.update');
     Route::get('/unit-laka/input-data-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.input-data-kendaraan.index'));
     Route::post('/unit-laka/input-data-kendaraan/store', [ULSDataKendaraanController::class, 'store'])->name('data-kendaraan.store');
 });

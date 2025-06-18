@@ -53,37 +53,39 @@
 
          <div>
          <label class="block text-sm font-medium">Total Kerugian</label>
-         <input name="total_kerugian" type="text" id="kerugian" placeholder="Rp" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+         <input type="hidden" name="total_kerugian" id="kerugian_hidden">
+         <input type="text" id="kerugian_format" placeholder="Rp" 
+               class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
          </div>
 
          <script>
          document.addEventListener('DOMContentLoaded', function () {
-            const input = document.getElementById('kerugian');
+            const inputFormat = document.getElementById('kerugian_format');
+            const inputHidden = document.getElementById('kerugian_hidden');
 
-            input.addEventListener('input', function (e) {
-               let value = input.value.replace(/[^0-9]/g, ''); // Hanya angka
-               if (value) {
-               value = new Intl.NumberFormat('id-ID').format(value); // Format dengan titik
-               input.value = 'Rp ' + value;
+            inputFormat.addEventListener('input', function () {
+               let numeric = inputFormat.value.replace(/[^0-9]/g, '');
+               if (numeric) {
+                     inputFormat.value = 'Rp ' + new Intl.NumberFormat('id-ID').format(numeric);
+                     inputHidden.value = numeric;
                } else {
-               input.value = '';
+                     inputFormat.value = '';
+                     inputHidden.value = '';
                }
             });
 
-            input.addEventListener('focus', function () {
-               // Hapus Rp saat fokus jika ingin ubah
-               input.value = input.value.replace(/[^\d]/g, '');
+            inputFormat.addEventListener('focus', function () {
+               inputFormat.value = inputHidden.value;
             });
 
-            input.addEventListener('blur', function () {
-               // Tambah Rp lagi saat keluar dari input
-               let value = input.value.replace(/[^0-9]/g, '');
-               if (value) {
-               input.value = 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+            inputFormat.addEventListener('blur', function () {
+               if (inputHidden.value) {
+                     inputFormat.value = 'Rp ' + new Intl.NumberFormat('id-ID').format(inputHidden.value);
                }
             });
          });
          </script>
+
 
          <div>
          <label class="block text-sm font-medium">Kode Penyidik</label>
@@ -152,6 +154,25 @@
         <span class="sr-only">Close</span>
     </button>
 </div>
+
+<script>
+    const toast = document.getElementById('toast-success');
+    if (toast) {
+        setTimeout(() => {
+            toast.classList.remove('opacity-100');
+            toast.classList.add('opacity-0');
+        }, 5000); // 5 detik
+
+        toast.addEventListener('transitionend', () => {
+            toast.remove();
+        });
+    }
+
+    function closeToast() {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+    }
+</script>
 @endif
 
 @endsection
