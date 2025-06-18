@@ -18,6 +18,9 @@
         {{-- ICON --}}
         <script src="https://kit.fontawesome.com/d7833bfda5.js" crossorigin="anonymous"></script>
 
+        {{-- Chart.Js --}}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     </head>

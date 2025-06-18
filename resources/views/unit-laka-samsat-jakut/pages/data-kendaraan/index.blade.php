@@ -4,7 +4,7 @@
 <div class="p-4 sm:ml-64 bg-[#ECF3F7] min-h-screen">
    <div class="p-4 mt-24">
 
-      <form action="{{ route('data-kendaraan.index') }}" method="GET" class="bg-white p-4 rounded-xl shadow-md">
+      <form action="{{ route('data-kendaraan.index') }}" method="GET">
          @csrf
          <div class="bg-white p-4 rounded-xl shadow-md">
             <p class="font-semibold text-lg text-[#373A3C]">Filter Data Kendaraan</p>
@@ -139,9 +139,9 @@
          <div class="mb-4 flex justify-center space-x-1">
             {{-- Tombol Previous --}}
             @if ($dataKendaraan->onFirstPage())
-               <button class="px-3 py-1 border rounded bg-gray-200 text-gray-500 cursor-not-allowed">Previous</button>
+               <button class="px-3 py-1 border rounded bg-gray-200 text-gray-500 cursor-not-allowed">Kembali</button>
             @else
-               <a href="{{ $dataKendaraan->previousPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Previous</a>
+               <a href="{{ $dataKendaraan->previousPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Kembali</a>
             @endif
 
             {{-- Tombol Halaman --}}
@@ -155,9 +155,9 @@
 
             {{-- Tombol Next --}}
             @if ($dataKendaraan->hasMorePages())
-               <a href="{{ $dataKendaraan->nextPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Next</a>
+               <a href="{{ $dataKendaraan->nextPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Selanjutnya</a>
             @else
-               <button class="px-3 py-1 border rounded bg-gray-200 text-gray-500 cursor-not-allowed">Next</button>
+               <button class="px-3 py-1 border rounded bg-gray-200 text-gray-500 cursor-not-allowed">Selanjutnya</button>
             @endif
          </div>
 

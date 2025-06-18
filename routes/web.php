@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\UnitLaka\ULSDataKendaraanController;
+use App\Http\Controllers\UnitLaka\ULSStatikKendaraanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,10 @@ Route::middleware(['auth', 'role:surveyor'])->group(function () {
 // Unit Laka Samsat Jakut
 // ==========================
 Route::middleware(['auth', 'role:unit laka'])->group(function () {
-    Route::get('/unit-laka/statistik-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.statistik-kendaraan.index'));
+
+    Route::get('/unit-laka/statistik-kendaraan', [ULSStatikKendaraanController::class, 'index'])->name('statistik-kendaraan.index');
+    Route::get('/unit-laka/statistik-kendaraan/download', [ULSStatikKendaraanController::class, 'unduhPdf'])->name('statistik-kendaraan.download');
+
     Route::get('/unit-laka/data-kendaraan', [ULSDataKendaraanController::class, 'index'])->name('data-kendaraan.index');
     Route::get('/unit-laka/data-kendaraan/unduh', [ULSDataKendaraanController::class, 'unduh'])->name('data-kendaraan.unduh');
     Route::put('/unit-laka/data-kendaraan/status-perkara/{id}', [ULSDataKendaraanController::class, 'updateStatus'])->name('data-kendaraan-status.update');
