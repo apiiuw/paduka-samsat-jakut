@@ -14,6 +14,7 @@ class UnitLakaDataKendaraan extends Model
         'id',
         'laporan_polisi',
         'tanggal_laporan',
+        'tanggal_kejadian',
         'nama_korban',
         'nama_tersangka',
         'jenis_kendaraan',

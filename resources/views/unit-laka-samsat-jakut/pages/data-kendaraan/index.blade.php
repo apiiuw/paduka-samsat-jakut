@@ -68,99 +68,111 @@
 
          <!-- Search -->
          <div class="flex items-center gap-2 mb-4 text-sm">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketikkan Nomor Laporan" class="w-full border text-sm rounded px-4 py-2" />
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketikkan Nomor Laporan atau Nomor Polisi" class="w-full border text-sm rounded px-4 py-2" />
             <button class="bg-blueJR hover:bg-blueJRdark text-white px-4 py-2 rounded whitespace-nowrap">Cari Data</button>
          </div>
       </form>
 
       <!-- Table -->
       <div class="overflow-x-auto w-full">
-      <table class="min-w-[1500px] border text-sm text-left">
-         <thead class="bg-[#373D53] text-white text-center">
-            <tr>
-            <th class="border px-2 py-1">No</th>
-            <th class="border px-2 py-1">Laporan Polisi</th>
-            <th class="border px-2 py-1">Tanggal Laporan</th>
-            <th class="border px-2 py-1">Nama Korban</th>
-            <th class="border px-2 py-1">Nama Tersangka</th>
-            <th class="border px-2 py-1">Jenis Kendaraan</th>
-            <th class="border px-2 py-1">Nomor Polisi</th>
-            <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
-            <th class="border px-2 py-1">Total Kerugian</th>
-            <th class="border px-2 py-1">Kode Penyidik</th>
-            <th class="border px-2 py-1">Foto Barang Bukti</th>
-            <th class="border px-2 py-1">Keterangan</th>
-            <th class="border px-2 py-1">Status Perkara</th>
-            </tr>
-         </thead>
-         <tbody class="bg-white">
-            @foreach ($dataKendaraan as $index => $item)
-            <tr class="border-t text-center">
-               <td class="border px-2 py-1">{{ $loop->iteration + ($dataKendaraan->currentPage() - 1) * $dataKendaraan->perPage() }}</td>
-               <td class="border px-2 py-1 whitespace-nowrap">{{ $item->laporan_polisi }}</td>
-               <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
-               <td class="border px-2 py-1">{{ $item->nama_korban }}</td>
-               <td class="border px-2 py-1">{{ $item->nama_tersangka }}</td>
-               <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
-               <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
-               <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_pkb_sw)->format('d/m/Y') }}</td>
-               <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->total_kerugian, 0, ',', '.') }}</td>
-               <td class="border px-2 py-1">{{ $item->kode_penyidik }}</td>
-               <td class="border px-2 py-1 flex justify-center">
-                  <img 
-                     src="{{ asset($item->foto_barang_bukti) }}" 
-                     class="w-12 h-12 object-cover rounded cursor-pointer"
-                     onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')"
-                  />
-               </td>
-               <td class="border px-2 py-1">{{ $item->keterangan }}</td>
-               <td class="border px-2 py-1 text-center">
-                  <form action="{{ route('data-kendaraan-status.update', $item->id) }}" method="POST">
-                     @csrf
-                     @method('PUT')
-                     <select name="status_perkara" onchange="this.form.submit()"
-                        class="text-sm font-semibold rounded px-2 py-1 
-                        {{ $item->status_perkara == 'Selesai' ? 'text-green-600' : 'text-red-600' }} 
-                        bg-transparent border-none focus:outline-none">
-                        <option class="text-red-600" value="Belum Selesai" {{ $item->status_perkara == 'Belum Selesai' ? 'selected' : '' }}>Belum Selesai</option>
-                        <option class="text-green-600" value="Selesai" {{ $item->status_perkara == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                     </select>
-                  </form>
-               </td>
-            </tr>
-            @endforeach
-         </tbody>
-      </table>
-      </div>
+         <table class="min-w-[1700px] border text-sm text-left">
+            <thead class="bg-[#373D53] text-white text-center">
+               <tr>
+                  <th class="border px-2 py-1">No</th>
+                  <th class="border px-2 py-1">Laporan Polisi</th>
+                  <th class="border px-2 py-1">Tanggal Laporan</th>
+                  <th class="border px-2 py-1">Tanggal Kejadian</th>
+                  <th class="border px-2 py-1">Kode Penyidik</th>
+                  <th class="border px-2 py-1">Nama Korban</th>
+                  <th class="border px-2 py-1">Nama Tersangka</th>
+                  <th class="border px-2 py-1">Jenis Kendaraan</th>
+                  <th class="border px-2 py-1">Nomor Polisi</th>
+                  <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
+                  <th class="border px-2 py-1">Total Kerugian</th>
+                  <th class="border px-2 py-1">Foto Barang Bukti</th>
+                  <th class="border px-2 py-1">Keterangan</th>
+                  <th class="border px-2 py-1">Status Perkara</th>
+               </tr>
+            </thead>
+            <tbody class="bg-white">
+               @php 
+                  // Penomoran disesuaikan dengan halaman
+                  $no = 1 + ($paginator->currentPage() - 1) * $paginator->perPage(); 
+               @endphp
 
+               @foreach ($dataKendaraan as $laporanPolisi => $items)
+                  @php $rowspan = $items->count(); @endphp
+                  @foreach ($items as $index => $item)
+                     <tr class="border-t text-center">
+                        {{-- No, hanya ditampilkan di baris pertama tiap grup --}}
+                        @if ($index == 0)
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $no++ }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->kode_penyidik }}</td>
+                        @endif
+
+                        <td class="border px-2 py-1">{{ $item->nama_korban }}</td>
+                        <td class="border px-2 py-1">{{ $item->nama_tersangka }}</td>
+                        <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
+                        <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
+                        <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_pkb_sw)->format('d/m/Y') }}</td>
+                        <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->total_kerugian, 0, ',', '.') }}</td>
+                        <td class="border px-2 py-1 flex justify-center">
+                           <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                              onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                        </td>
+                        <td class="border px-2 py-1">{{ $item->keterangan }}</td>
+
+                        {{-- Status Perkara hanya ditampilkan di baris pertama tiap grup --}}
+                        @if ($index == 0)
+                           <td class="border px-2 py-1 text-center" rowspan="{{ $rowspan }}">
+                              <form action="{{ route('data-kendaraan-status.update', $item->id) }}" method="POST">
+                                 @csrf
+                                 @method('PUT')
+                                 <select name="status_perkara" onchange="this.form.submit()"
+                                    class="text-sm font-semibold rounded px-2 py-1 
+                                    {{ $item->status_perkara == 'Selesai' ? 'text-green-600' : 'text-red-600' }} 
+                                    bg-transparent border-none focus:outline-none">
+                                    <option class="text-red-600" value="Belum Selesai" {{ $item->status_perkara == 'Belum Selesai' ? 'selected' : '' }}>Belum Selesai</option>
+                                    <option class="text-green-600" value="Selesai" {{ $item->status_perkara == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                 </select>
+                              </form>
+                           </td>
+                        @endif
+                     </tr>
+                  @endforeach
+               @endforeach
+            </tbody>
+         </table>
+      </div>
 
       <!-- Pagination -->
       <div class="flex flex-col justify-center items-center mt-4">
          <div class="mb-4 flex justify-center space-x-1">
             {{-- Tombol Previous --}}
-            @if ($dataKendaraan->onFirstPage())
+            @if ($paginator->onFirstPage())
                <button class="px-3 py-1 border rounded bg-gray-200 text-gray-500 cursor-not-allowed">Kembali</button>
             @else
-               <a href="{{ $dataKendaraan->previousPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Kembali</a>
+               <a href="{{ $paginator->previousPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Kembali</a>
             @endif
 
             {{-- Tombol Halaman --}}
-            @for ($i = 1; $i <= $dataKendaraan->lastPage(); $i++)
-               <a href="{{ $dataKendaraan->url($i) }}"
-                  class="px-3 py-1 border rounded
-                  {{ $dataKendaraan->currentPage() == $i ? 'bg-blueJR text-white' : 'bg-white hover:bg-gray-100' }}">
+            @for ($i = 1; $i <= $paginator->lastPage(); $i++)
+               <a href="{{ $paginator->url($i) }}"
+                  class="px-3 py-1 border rounded {{ $paginator->currentPage() == $i ? 'bg-blueJR text-white' : 'bg-white hover:bg-gray-100' }}">
                   {{ $i }}
                </a>
             @endfor
 
             {{-- Tombol Next --}}
-            @if ($dataKendaraan->hasMorePages())
-               <a href="{{ $dataKendaraan->nextPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Selanjutnya</a>
+            @if ($paginator->hasMorePages())
+               <a href="{{ $paginator->nextPageUrl() }}" class="px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300">Selanjutnya</a>
             @else
                <button class="px-3 py-1 border rounded bg-gray-200 text-gray-500 cursor-not-allowed">Selanjutnya</button>
             @endif
          </div>
-
 
          <form action="{{ route('data-kendaraan.unduh') }}" method="GET">
             {{-- Bawa semua parameter filter dan search --}}
@@ -172,8 +184,8 @@
 
             <button type="submit" class="bg-blueJR text-white px-6 py-2 rounded">Unduh Data</button>
          </form>
-
       </div>
+
    </div>
 
    </div>

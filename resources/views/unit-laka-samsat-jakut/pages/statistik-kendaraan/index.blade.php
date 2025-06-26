@@ -8,7 +8,7 @@
          <!-- Total Data Kendaraan -->
          <div class="bg-blueJR text-white p-5 py-10 rounded-lg shadow-md flex justify-between items-center">
             <div>
-                  <p class="text-sm">Total Data Kendaraan</p>
+                  <p class="text-sm">Total Data Laporan</p>
                   <p class="text-2xl font-bold">{{ $totalData }}</p>
             </div>
             <div class="text-6xl">
@@ -62,17 +62,42 @@
                   type: 'line',
                   data: {
                         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                        datasets: [{
-                           label: 'Jumlah Data Kendaraan',
-                           data: @json($dataGrafik),
-                           borderColor: '#006AB2',
-                           backgroundColor: 'rgba(37, 99, 235, 0.2)',
-                           borderWidth: 2,
-                           fill: true,
-                           tension: 0.4, // Untuk garis melengkung
-                           pointRadius: 5,
-                           pointBackgroundColor: '#006AB2'
-                        }]
+                        datasets: [
+                           {
+                              label: 'Total Data Laporan',
+                              data: @json($dataGrafik),
+                              borderColor: '#006AB2',
+                              backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                              borderWidth: 2,
+                              fill: true,
+                              tension: 0.4,
+                              pointRadius: 5,
+                              pointBackgroundColor: '#006AB2'
+                           },
+                           {
+                              label: 'Total Perkara Selesai',
+                              data: @json($dataSelesai),
+                              borderColor: '#16A34A', // tailwind green-600
+                              backgroundColor: 'rgba(22, 163, 74, 0.1)',
+                              borderWidth: 2,
+                              fill: false,
+                              tension: 0.4,
+                              pointRadius: 4,
+                              pointBackgroundColor: '#16A34A'
+                           },
+                           {
+                              label: 'Total Perkara Belum Selesai',
+                              data: @json($dataBelumSelesai),
+                              borderColor: '#DC2626', // tailwind red-600
+                              backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                              borderWidth: 2,
+                              fill: false,
+                              tension: 0.4,
+                              pointRadius: 4,
+                              pointBackgroundColor: '#DC2626'
+                           }
+                        ]
+
                   },
                   options: {
                         responsive: true,

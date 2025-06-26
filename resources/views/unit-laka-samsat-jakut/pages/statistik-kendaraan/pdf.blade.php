@@ -42,8 +42,8 @@
             vertical-align: middle;
         }
 
-        td:not(.keterangan),
-        th:not(.keterangan) {
+        td:not(.keterangan):not(.no),
+        th:not(.keterangan):not(.no) {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -95,17 +95,19 @@
     <p><strong>Rincian Data:</strong></p>
     <table>
         <colgroup>
-            <col class="no" style="width: 20px;">
-            <col style="width: 70px;"> <!-- Laporan Polisi -->
-            <col style="width: 65px;"> <!-- Tanggal -->
-            <col style="width: 80px;"> <!-- Korban -->
-            <col style="width: 80px;"> <!-- Tersangka -->
-            <col style="width: 70px;"> <!-- Jenis Kendaraan -->
-            <col style="width: 80px;"> <!-- Nomor Polisi -->
-            <col style="width: 85px;"> <!-- Masa Berlaku -->
-            <col style="width: 85px;"> <!-- Kerugian -->
+            <col style="width: 25px;"> <!-- No -->
+            <col style="width: 85px;"> <!-- Laporan Polisi -->
+            <col style="width: 65px;"> <!-- Tanggal Laporan -->
+            <col style="width: 65px;"> <!-- Tanggal Kejadian -->
             <col style="width: 55px;"> <!-- Kode Penyidik -->
-            <col> <!-- Keterangan (biarkan fleksibel) -->
+            <col style="width: 75px;"> <!-- Nama Korban -->
+            <col style="width: 75px;"> <!-- Nama Tersangka -->
+            <col style="width: 75px;"> <!-- Jenis Kendaraan -->
+            <col style="width: 75px;"> <!-- Nomor Polisi -->
+            <col style="width: 85px;"> <!-- Masa Berlaku -->
+            <col style="width: 85px;"> <!-- Total Kerugian -->
+            <col style="width: 60px;"> <!-- Foto Barang Bukti -->
+            <col style="width: 120px;"> <!-- Keterangan -->
             <col style="width: 70px;"> <!-- Status -->
         </colgroup>
 
@@ -114,43 +116,65 @@
                 <th class="no">No</th>
                 <th>Laporan Polisi</th>
                 <th>Tanggal Laporan</th>
+                <th>Tanggal Kejadian</th>
+                <th>Kode Penyidik</th>
                 <th>Nama Korban</th>
                 <th>Nama Tersangka</th>
                 <th>Jenis Kendaraan</th>
                 <th>Nomor Polisi</th>
                 <th>Masa Berlaku PKB & SW</th>
                 <th>Total Kerugian</th>
-                <th>Kode Penyidik</th>
                 <th>Foto Barang Bukti</th>
                 <th>Keterangan</th>
                 <th>Status Perkara</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($data as $i => $item)
-            <tr>
-                <td class="no">{{ $i + 1 }}</td>
-                <td>{{ $item->laporan_polisi }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->tanggal_laporan)->translatedFormat('d F Y') }}</td>
-                <td>{{ $item->nama_korban }}</td>
-                <td>{{ $item->nama_tersangka }}</td>
-                <td>{{ $item->jenis_kendaraan }}</td>
-                <td>{{ $item->nomor_polisi }}</td>
-                <td>{{ $item->masa_berlaku_pkb_sw }}</td>
-                <td>Rp {{ number_format($item->total_kerugian, 0, ',', '.') }}</td>
-                <td>{{ $item->kode_penyidik }}</td>
-                <td>
-                    @if($item->foto_barang_bukti && file_exists(public_path($item->foto_barang_bukti)))
-                        <img src="{{ public_path($item->foto_barang_bukti) }}" alt="Foto" width="50" height="50">
-                    @else
-                        -
+        @foreach($data as $i => $group)
+            @php
+                $first = $group->first();
+                $rowspan = $group->count();
+            @endphp
+
+            @foreach($group as $j => $item)
+                <tr>
+                    {{-- Kolom yang hanya ditampilkan sekali --}}
+                    @if($j == 0)
+                        <td class="no" rowspan="{{ $rowspan }}">{{ $i + 1 }}</td>
+                        <td rowspan="{{ $rowspan }}">{{ $first->laporan_polisi }}</td>
+                        <td rowspan="{{ $rowspan }}">
+                            {{ $first->tanggal_laporan ? \Carbon\Carbon::parse($first->tanggal_laporan)->format('d/m/Y') : '-' }}
+                        </td>
+                        <td rowspan="{{ $rowspan }}">
+                            {{ $first->tanggal_kejadian ? \Carbon\Carbon::parse($first->tanggal_kejadian)->format('d/m/Y') : '-' }}
+                        </td>
+                        <td rowspan="{{ $rowspan }}">{{ $first->kode_penyidik }}</td>
                     @endif
-                </td>
-                <td class="keterangan">{{ $item->keterangan ?? '-' }}</td>
-                <td>{{ $item->status_perkara }}</td>
-            </tr>
+
+                    {{-- Kolom per kendaraan --}}
+                    <td>{{ $item->nama_korban }}</td>
+                    <td>{{ $item->nama_tersangka }}</td>
+                    <td>{{ $item->jenis_kendaraan }}</td>
+                    <td>{{ $item->nomor_polisi }}</td>
+                    <td>{{ $item->masa_berlaku_pkb_sw }}</td>
+                    <td>Rp {{ number_format($item->total_kerugian, 0, ',', '.') }}</td>
+                    <td>
+                        @if($item->foto_barang_bukti && file_exists(public_path($item->foto_barang_bukti)))
+                            <img src="{{ public_path($item->foto_barang_bukti) }}" alt="Foto" width="30" height="30">
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td class="keterangan">{{ $item->keterangan ?? '-' }}</td>
+
+                    @if($j == 0)
+                        <td rowspan="{{ $rowspan }}">{{ $first->status_perkara }}</td>
+                    @endif
+                </tr>
             @endforeach
+        @endforeach
         </tbody>
+
     </table>
 
 </body>

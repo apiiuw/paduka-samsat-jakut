@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\UnitLakaDataKendaraan;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ULSDataKendaraanController extends Controller
 {
@@ -15,14 +16,17 @@ class ULSDataKendaraanController extends Controller
     {
         $query = UnitLakaDataKendaraan::query();
 
-        // Pencarian berdasarkan kolom laporan_polisi
+        // Pencarian berdasarkan kolom laporan_polisi atau nomor_polisi
         if ($request->filled('search')) {
-            $query->where('laporan_polisi', 'like', '%' . $request->search . '%');
+            $query->where(function ($q) use ($request) {
+                $q->where('laporan_polisi', 'like', '%' . $request->search . '%')
+                ->orWhere('nomor_polisi', 'like', '%' . $request->search . '%');
+            });
         }
 
-        // Filter berdasarkan tahun (ambil dari tanggal_laporan)
+        // Filter berdasarkan tahun
         if ($request->filled('tahun')) {
-            $tahun = explode('/', $request->tahun)[0]; // Misalnya 2025/2026 → ambil 2025
+            $tahun = explode('/', $request->tahun)[0];
             $query->whereYear('tanggal_laporan', $tahun);
         }
 
@@ -59,10 +63,36 @@ class ULSDataKendaraanController extends Controller
             $query->where('status_perkara', $request->status_perkara);
         }
 
-        // Ambil data dengan pagination dan query string agar filter tetap terbawa
-        $dataKendaraan = $query->paginate(10)->withQueryString();
+        // Ambil semua data
+        $allData = $query->get();
 
-        return view('unit-laka-samsat-jakut.pages.data-kendaraan.index', compact('dataKendaraan'));
+        // Grouping by laporan_polisi
+        $groupedData = $allData->groupBy('laporan_polisi');
+
+        // Ambil semua grup sebagai array
+        $groupArray = $groupedData->all();
+
+        // Pagination setup
+        $page = request('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
+        // Ambil slice per halaman
+        $pagedGroup = array_slice($groupArray, $offset, $perPage, true);
+
+        // Buat paginator
+        $paginator = new LengthAwarePaginator(
+            $pagedGroup,
+            count($groupArray),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return view('unit-laka-samsat-jakut.pages.data-kendaraan.index', [
+            'dataKendaraan' => collect($paginator->items()), // Koleksi data per halaman
+            'paginator' => $paginator
+        ]);
     }
 
     public function unduh(Request $request)
@@ -112,52 +142,85 @@ class ULSDataKendaraanController extends Controller
             'status_perkara' => 'required|in:Selesai,Belum Selesai',
         ]);
 
+        // Ambil data yang sedang dipilih
         $data = UnitLakaDataKendaraan::findOrFail($id);
-        $data->status_perkara = $request->status_perkara;
-        $data->save();
 
-        return back()->with('success', 'Status perkara berhasil diperbarui.');
+        // Ambil semua data dengan nomor laporan yang sama
+        UnitLakaDataKendaraan::where('laporan_polisi', $data->laporan_polisi)
+            ->update(['status_perkara' => $request->status_perkara]);
+
+        return back()->with('success', 'Semua status perkara dengan nomor laporan yang sama berhasil diperbarui.');
     }
-
 
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'laporan_polisi' => 'required|string',
             'tanggal_laporan' => 'required|date',
-            'nama_korban' => 'required|string',
-            'nama_tersangka' => 'nullable|string',
-            'jenis_kendaraan' => 'required|string',
-            'nomor_polisi' => 'required|string',
-            'masa_berlaku_pkb_sw' => 'required|date',
-            'total_kerugian' => 'required|numeric',
+            'tanggal_kejadian' => 'required|date',
             'kode_penyidik' => 'required|string',
-            'foto_barang_bukti' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'keterangan' => 'nullable|string',
             'status_perkara' => 'required|string',
+
+            'nama_korban' => 'required|array',
+            'nama_korban.*' => 'required|string',
+
+            'nama_tersangka' => 'nullable|array',
+            'nama_tersangka.*' => 'nullable|string',
+
+            'jenis_kendaraan' => 'required|array',
+            'jenis_kendaraan.*' => 'required|string',
+
+            'nomor_polisi' => 'required|array',
+            'nomor_polisi.*' => 'required|string',
+
+            'masa_berlaku_pkb_sw' => 'required|array',
+            'masa_berlaku_pkb_sw.*' => 'required|date',
+
+            'total_kerugian' => 'required|array',
+            'total_kerugian.*' => 'required|numeric',
+
+            'foto_barang_bukti' => 'required|array',
+            'foto_barang_bukti.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+
+            'keterangan' => 'nullable|array',
+            'keterangan.*' => 'nullable|string',
         ]);
 
-        $file = $request->file('foto_barang_bukti');
-        $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
-        $path = 'data/unit-laka-samsat-jakut/data-kendaraan/';
-        $file->move(public_path($path), $filename);
+        $jumlahKendaraan = count($request->nama_korban);
 
-        UnitLakaDataKendaraan::create([
-            'id' => Str::uuid(),
-            'laporan_polisi' => $request->laporan_polisi,
-            'tanggal_laporan' => $request->tanggal_laporan,
-            'nama_korban' => $request->nama_korban,
-            'nama_tersangka' => $request->nama_tersangka,
-            'jenis_kendaraan' => $request->jenis_kendaraan,
-            'nomor_polisi' => $request->nomor_polisi,
-            'masa_berlaku_pkb_sw' => $request->masa_berlaku_pkb_sw,
-            'total_kerugian' => $request->total_kerugian,
-            'kode_penyidik' => $request->kode_penyidik,
-            'foto_barang_bukti' => $path . $filename,
-            'keterangan' => $request->keterangan,
-            'status_perkara' => $request->status_perkara,
-        ]);
+        for ($i = 0; $i < $jumlahKendaraan; $i++) {
+            // Cek apakah file tersedia
+            if ($request->hasFile('foto_barang_bukti.' . $i)) {
+                $file = $request->file('foto_barang_bukti')[$i];
+                $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+                $path = 'data/unit-laka-samsat-jakut/data-kendaraan/';
+                $file->move(public_path($path), $filename);
+                $fotoPath = $path . $filename;
+            } else {
+                $fotoPath = null; // Jaga-jaga, tapi harusnya selalu ada
+            }
+
+            UnitLakaDataKendaraan::create([
+                'id' => Str::uuid(),
+                'laporan_polisi' => $request->laporan_polisi,
+                'tanggal_laporan' => $request->tanggal_laporan,
+                'tanggal_kejadian' => $request->tanggal_kejadian,
+                'kode_penyidik' => $request->kode_penyidik,
+                'status_perkara' => $request->status_perkara,
+
+                'nama_korban' => $request->nama_korban[$i],
+                'nama_tersangka' => $request->nama_tersangka[$i] ?? null,
+                'jenis_kendaraan' => $request->jenis_kendaraan[$i],
+                'nomor_polisi' => $request->nomor_polisi[$i],
+                'masa_berlaku_pkb_sw' => $request->masa_berlaku_pkb_sw[$i],
+                'total_kerugian' => $request->total_kerugian[$i],
+                'foto_barang_bukti' => $fotoPath,
+                'keterangan' => $request->keterangan[$i] ?? null,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Data kendaraan berhasil disimpan!');
     }
+
 }

@@ -1,135 +1,152 @@
 @extends('unit-laka-samsat-jakut.layouts.main')
 @section('container')
 
-<div class="p-4 sm:ml-64 bg-[#ECF3F7]">
-   <div class="p-4 mt-24">
-   <div class="bg-white shadow rounded-lg p-6 text-sm">
-      <h2 class="text-lg font-semibold mb-4 text-[#373A3C]"><span><i class="fa-solid fa-square-plus fa-lg mr-2"></i></span>Input Data Kendaraan</h2>
-      <hr class="bg-[#E8EEF2] h-[2px] mt-4 mb-8">
+<div class="p-4 sm:ml-64 bg-[#ECF3F7]" x-data="formHandler()">
+    <div class="p-4 mt-24">
+        <div class="bg-white shadow rounded-lg p-6 text-sm">
+            <h2 class="text-lg font-semibold mb-4 text-[#373A3C]">
+                <span><i class="fa-solid fa-square-plus fa-lg mr-2"></i></span>Input Data Laporan
+            </h2>
+            <hr class="bg-[#E8EEF2] h-[2px] mt-4 mb-8">
 
-      <form class="space-y-4" method="POST" action="{{ route('data-kendaraan.store') }}" enctype="multipart/form-data" onsubmit="return confirm('Yakin menyimpan data?')">
-      @csrf
+            <form class="space-y-4" method="POST" action="{{ route('data-kendaraan.store') }}" enctype="multipart/form-data" onsubmit="return confirm('Yakin menyimpan data?')">
+                @csrf
 
-         <div>
-         <label class="block text-sm font-medium">Laporan Polisi</label>
-         <input name="laporan_polisi" type="text" placeholder="Ketikkan Laporan Polisi..." class="placeholder:text-gray-500 placeholder:normal-case uppercase mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
-         </div>
+                <!-- Form Data Laporan -->
+                <div>
+                    <label class="block text-sm font-medium">Laporan Polisi</label>
+                    <input name="laporan_polisi" type="text" placeholder="Ketikkan Laporan Polisi..." class="placeholder:text-gray-500 placeholder:normal-case uppercase mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
+                </div>
 
-         <div>
-         <label class="block text-sm font-medium">Tanggal Laporan</label>
-         <input name="tanggal_laporan" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
-         </div>
+                <div>
+                    <label class="block text-sm font-medium">Tanggal Laporan</label>
+                    <input name="tanggal_laporan" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
+                </div>
 
-         <div>
-         <label class="block text-sm font-medium">Nama Korban</label>
-         <input name="nama_korban" type="text" placeholder="Ketikkan Nama Korban..." class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-         </div>
+                <div>
+                    <label class="block text-sm font-medium">Tanggal Kejadian</label>
+                    <input name="tanggal_kejadian" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
+                </div>
 
-         <div>
-         <label class="block text-sm font-medium">Nama Tersangka</label>
-         <input name="nama_tersangka" type="text" placeholder="Ketikkan Nama Tersangka..." class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-         </div>
+                <div>
+                    <label class="block text-sm font-medium">Kode Penyidik</label>
+                    <select name="kode_penyidik" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                        <option value="">Pilih Kode Penyidik</option>
+                        <option value="T.1">T.1</option>
+                        <option value="T.2">T.2</option>
+                        <option value="T.3">T.3</option>
+                        <option value="T.4">T.4</option>
+                    </select>
+                </div>
 
-         <div>
-         <label class="block text-sm font-medium">Jenis Kendaraan</label>
-         <select name="jenis_kendaraan" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-            <option value="">Pilih Jenis Kendaraan</option>
-            <option value="Roda 2">Roda 2</option>
-            <option value="Roda 3">Roda 3</option>
-            <option value="Roda 4">Roda 4</option>
-            <option value="Diatas Roda 4">Diatas Roda 4</option>
-         </select>
-         </div>
+                <div>
+                    <label class="block text-sm font-medium">Status Perkara</label>
+                    <select name="status_perkara" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                        <option value="">Pilih Status Perkara</option>
+                        <option value="Selesai">Selesai</option>
+                        <option value="Belum Selesai">Belum Selesai</option>
+                    </select>
+                </div>
 
-         <div>
-         <label class="block text-sm font-medium">Nomor Polisi</label>
-         <input name="nomor_polisi" type="text" placeholder="Ketikkan Nomor Polisi..." class="placeholder:text-gray-500 placeholder:normal-case uppercase mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-         </div>
+                <div class="bg-white shadow rounded-lg p-6 text-sm mt-10">
+                    <h2 class="text-lg font-semibold mb-4 text-[#373A3C]">
+                        <span><i class="fa-solid fa-car fa-lg mr-2"></i></span>Input Data Kendaraan
+                    </h2>
+                    <hr class="bg-[#E8EEF2] h-[2px] mt-4 mb-8">
 
-         <div>
-         <label class="block text-sm font-medium">Masa Berlaku PKB/SW</label>
-         <input name="masa_berlaku_pkb_sw" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
-         </div>
+                    <template x-for="(kendaraan, index) in kendaraans" :key="index">
+                        <div class="bg-[#f6f7f8] p-4 rounded-lg shadow-sm mb-6 space-y-4">
+                            <h3 class="font-semibold text-base mb-4 text-[#373A3C]">Kendaraan <span x-text="index + 1"></span></h3>
 
-         <div>
-         <label class="block text-sm font-medium">Total Kerugian</label>
-         <input type="hidden" name="total_kerugian" id="kerugian_hidden">
-         <input type="text" id="kerugian_format" placeholder="Rp" 
-               class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-         </div>
+                            <div>
+                                <label class="block text-sm font-medium">Nama Korban</label>
+                                <input :name="'nama_korban[]'" type="text" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                            </div>
 
-         <script>
-         document.addEventListener('DOMContentLoaded', function () {
-            const inputFormat = document.getElementById('kerugian_format');
-            const inputHidden = document.getElementById('kerugian_hidden');
+                            <div>
+                                <label class="block text-sm font-medium">Nama Tersangka</label>
+                                <input :name="'nama_tersangka[]'" type="text" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                            </div>
 
-            inputFormat.addEventListener('input', function () {
-               let numeric = inputFormat.value.replace(/[^0-9]/g, '');
-               if (numeric) {
-                     inputFormat.value = 'Rp ' + new Intl.NumberFormat('id-ID').format(numeric);
-                     inputHidden.value = numeric;
-               } else {
-                     inputFormat.value = '';
-                     inputHidden.value = '';
-               }
-            });
+                            <div>
+                                <label class="block text-sm font-medium">Jenis Kendaraan</label>
+                                <select :name="'jenis_kendaraan[]'" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                                    <option value="">Pilih Jenis Kendaraan</option>
+                                    <option value="Roda 2">Roda 2</option>
+                                    <option value="Roda 3">Roda 3</option>
+                                    <option value="Roda 4">Roda 4</option>
+                                    <option value="Diatas Roda 4">Diatas Roda 4</option>
+                                </select>
+                            </div>
 
-            inputFormat.addEventListener('focus', function () {
-               inputFormat.value = inputHidden.value;
-            });
+                            <div x-data="nopolHandler()" class="space-y-1">
+                                <label class="block text-sm font-medium">Nomor Polisi</label>
+                                <div class="flex items-center space-x-1">
+                                    <input type="text" x-model="part1" @input="updateNomorPolisi" maxlength="2"
+                                        class="uppercase text-center w-14 border border-gray-300 rounded px-2 py-2 text-sm"
+                                        placeholder="">
 
-            inputFormat.addEventListener('blur', function () {
-               if (inputHidden.value) {
-                     inputFormat.value = 'Rp ' + new Intl.NumberFormat('id-ID').format(inputHidden.value);
-               }
-            });
-         });
-         </script>
+                                    <span class="text-lg font-semibold">-</span>
 
+                                    <input type="text" x-model="part2" @input="updateAngkaOnly(); updateNomorPolisi()" maxlength="4"
+                                        inputmode="numeric"
+                                        class="text-center w-20 border border-gray-300 rounded px-2 py-2 text-sm"
+                                        placeholder="">
 
-         <div>
-         <label class="block text-sm font-medium">Kode Penyidik</label>
-         <select name="kode_penyidik" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-            <option value="">Pilih Kode Penyidik</option>
-            <option value="T.1">T.1</option>
-            <option value="T.2">T.2</option>
-            <option value="T.3">T.3</option>
-            <option value="T.4">T.4</option>
-            <option value="T.5">T.5</option>
-            <option value="T.6">T.6</option>
-            <option value="T.7">T.7</option>
-            <option value="T.8">T.8</option>
-            <option value="T.9">T.9</option>
-            <option value="T.10">T.10</option>
-         </select>
-         </div>
+                                    <span class="text-lg font-semibold">-</span>
 
-         <div>
-         <label class="block text-sm font-medium">Foto Barang Bukti</label>
-         <input name="foto_barang_bukti" type="file" accept="image/*" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-         </div>
+                                    <input type="text" x-model="part3" @input="updateNomorPolisi" maxlength="3"
+                                        class="uppercase text-center w-16 border border-gray-300 rounded px-2 py-2 text-sm"
+                                        placeholder="">
+                                </div>
 
-         <div>
-         <label class="block text-sm font-medium">Keterangan</label>
-         <textarea name="keterangan" placeholder="Ketikkan Keterangan..." class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2"></textarea>
-         </div>
+                                <!-- Hidden input untuk dikirim ke backend -->
+                                <input type="hidden" name="nomor_polisi[]" :value="full">
+                            </div>
 
-         <div>
-         <label class="block text-sm font-medium">Status Perkara</label>
-         <select name="status_perkara" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-            <option value="">Pilih Status Perkara</option>
-            <option value="Selesai">Selesai</option>
-            <option value="Belum Selesai">Belum Selesai</option>
-         </select>
-         </div>
+                            <div>
+                                <label class="block text-sm font-medium">Masa Berlaku PKB/SW</label>
+                                <input :name="'masa_berlaku_pkb_sw[]'" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                            </div>
 
-         <div class="pt-4 flex justify-center">
-            <button type="submit" class="bg-blueJR text-white px-4 py-2 rounded hover:bg-blueJRdark">Simpan Data</button>
-         </div>
-      </form>
-   </div>
-   </div>
+                            <div x-data="currencyHandler()">
+                                <label class="block text-sm font-medium">Total Kerugian</label>
+                                <input type="hidden" :name="'total_kerugian[]'" x-model="hiddenValue">
 
+                                <input type="text" placeholder="Rp" 
+                                    x-model="displayValue"
+                                    @input="formatInput"
+                                    @focus="focusInput"
+                                    @blur="blurInput"
+                                    class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium">Foto Barang Bukti</label>
+                                <input :name="'foto_barang_bukti[]'" type="file" accept="image/*" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 bg-white">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium">Keterangan</label>
+                                <textarea :name="'keterangan[]'" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2"></textarea>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="mt-4">
+                        <button type="button" @click="tambahKendaraan" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                            <i class="fa-solid fa-plus mr-2"></i>Tambah Kendaraan
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-center">
+                    <button type="submit" class="bg-blueJR text-white px-4 py-2 rounded hover:bg-blueJRdark">Simpan Data</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
 </div>
 
 @if(session('success'))
@@ -174,5 +191,75 @@
     }
 </script>
 @endif
+
+@if ($errors->any())
+    <div class="mb-4 p-4 bg-red-100 text-red-700 border border-red-400 rounded">
+        <strong>Terjadi kesalahan saat menyimpan data:</strong>
+        <ul class="mt-2 list-disc list-inside text-sm">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<script>
+function formHandler() {
+    return {
+        kendaraans: [{}],
+        tambahKendaraan() {
+            this.kendaraans.push({});
+        }
+    }
+}
+
+function currencyHandler() {
+    return {
+        hiddenValue: '',
+        displayValue: '',
+
+        formatInput() {
+            let numeric = this.displayValue.replace(/[^0-9]/g, '');
+            if (numeric) {
+                this.displayValue = 'Rp ' + new Intl.NumberFormat('id-ID').format(numeric);
+                this.hiddenValue = numeric;
+            } else {
+                this.displayValue = '';
+                this.hiddenValue = '';
+            }
+        },
+
+        focusInput() {
+            this.displayValue = this.hiddenValue;
+        },
+
+        blurInput() {
+            if (this.hiddenValue) {
+                this.displayValue = 'Rp ' + new Intl.NumberFormat('id-ID').format(this.hiddenValue);
+            }
+        }
+    }
+}
+
+function nopolHandler() {
+    return {
+        part1: '',
+        part2: '',
+        part3: '',
+        full: '',
+
+        updateAngkaOnly() {
+            this.part2 = this.part2.replace(/[^0-9]/g, '');
+        },
+
+        updateNomorPolisi() {
+            const p1 = this.part1.toUpperCase().trim();
+            const p2 = this.part2.trim();
+            const p3 = this.part3.toUpperCase().trim();
+            this.full = [p1, p2, p3].filter(Boolean).join('-');
+        }
+    }
+}
+</script>
 
 @endsection
