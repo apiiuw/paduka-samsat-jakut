@@ -1,7 +1,8 @@
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-50 w-64 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
    <div class="flex justify-center items-center py-3 bg-[#42485D]">
-      <img class="h-16" src="{{ asset('img/jasa-raharja/logo/logo-paduka.png') }}" alt="">
-      <img class="h-16" src="{{ asset('img/unit-laka-samsat/logo/logo-samsat.png') }}" alt="">
+      <img class="h-14" src="{{ asset('img/jasa-raharja/logo/logo-jasaraharja.png') }}" alt="">
+      <img class="h-14" src="{{ asset('img/jasa-raharja/logo/logo-paduka.png') }}" alt="">
+      <img class="h-14" src="{{ asset('img/unit-laka-samsat/logo/logo-samsat.png') }}" alt="">
    </div>
    <div class="h-full px-3 pb-4 pt-5 overflow-y-auto bg-[#373D53]">
       <div class="flex flex-col text-left text-[#ADB7C1] border-b border-[#ADB7C1] pb-3 mb-3">
