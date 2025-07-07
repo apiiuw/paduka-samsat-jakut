@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\UnitLaka\ULSDataKendaraanController;
 use App\Http\Controllers\UnitLaka\ULSStatikKendaraanController;
+use App\Http\Controllers\AdminJR\AdminDataLaporanController;
+use App\Http\Controllers\AdminJR\AdminDataHasilSurveiController;
+use App\Http\Controllers\AdminJR\AdminStatistikLaporanController;
+use App\Http\Controllers\Surveyor\SDataWajibSurveiController;
+use App\Http\Controllers\Surveyor\SDataHasilSurveiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,18 +30,29 @@ Route::post('/sign-out', [SignInController::class, 'signOut'])->name('signOut');
 // JR Kanwil DKI Jakarta
 // ==========================
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/jr/statistik-laporan', fn () => view('jasa-raharja.pages.statistik-laporan.index'));
-    Route::get('/jr/data-laporan', fn () => view('jasa-raharja.pages.data-laporan.index'));
+    Route::get('/jr/statistik-laporan', [AdminStatistikLaporanController::class, 'index'])->name('jr.statistik-laporan.index');
+    Route::get('/jr/statistik-laporan/unduh', [AdminStatistikLaporanController::class, 'unduhPdf'])->name('jr.statistik-laporan.unduh');
+    Route::get('/jr/data-laporan', [AdminDataLaporanController::class, 'index'])->name('jr.data-laporan.index');
+    Route::put('/jr/data-laporan/{id}/update-status', [AdminDataLaporanController::class, 'updateStatus'])->name('jr.updateStatus');
+    Route::get('jr/data-laporan/unduh', [AdminDataLaporanController::class, 'unduhLaporan'])->name('jr.laporan.download');
     Route::get('/jr/data-hasil-survei', fn () => view('jasa-raharja.pages.data-hasil-survei.index'));
+    Route::get('/jr/data-hasil-survei', [AdminDataHasilSurveiController::class, 'index'])->name('jr.data-hasil-survei.index');
+    Route::get('/jr/data-hasil-survei/unduh', [AdminDataHasilSurveiController::class, 'unduhLaporan'])->name('jr.hasil-survei.download');
 });
 
 // ==========================
 // Petugas Surveyor
 // ==========================
 Route::middleware(['auth', 'role:surveyor'])->group(function () {
-    Route::get('/surveyor/data-survei', fn () => view('surveyor.pages.data-survei.index'));
-    Route::get('/surveyor/data-hasil-survei', fn () => view('surveyor.pages.data-hasil-survei.index'));
-    Route::get('/surveyor/input-data-survei', fn () => view('surveyor.pages.input-data-survei.index'));
+    Route::get('/surveyor/data-survei', [SDataWajibSurveiController::class, 'index'])->name('surveyor.data-survei.index');
+    Route::put('/surveyor/data-survei/updateStatusSurvei/{id}', [SDataWajibSurveiController::class, 'updateStatusSurvei'])->name('surveyor.updateStatusSurvei');
+    Route::put('surveyor/data-survei/updateCatatan/{id}', [SDataWajibSurveiController::class, 'updateCatatan'])->name('surveyor.updateCatatan');
+    Route::get('/surveyor/data-survei/unduh', [SDataWajibSurveiController::class, 'unduhLaporan'])->name('surveyor.data-survei.download');
+    Route::get('/surveyor/data-survei/input-hasil-survei/{id}', [SDataWajibSurveiController::class, 'input'])->name('surveyor.data-survei.input');
+    Route::post('/surveyor/data-survei/input-hasil-survei/store', [SDataWajibSurveiController::class, 'store'])->name('surveyor.hasil-survei.store');
+
+    Route::get('/surveyor/data-hasil-survei', [SDataHasilSurveiController::class, 'index'])->name('surveyor.data-hasil-survei.index');
+    Route::get('/surveyor/data-hasil-survei/unduh', [SDataHasilSurveiController::class, 'unduhLaporan'])->name('surveyor.data-hasil-survei.download');
 });
 
 // ==========================

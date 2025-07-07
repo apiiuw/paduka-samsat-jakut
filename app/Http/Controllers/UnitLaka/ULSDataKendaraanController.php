@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\UnitLakaDataKendaraan;
+use App\Models\AdminJrDataLaporan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -189,6 +190,7 @@ class ULSDataKendaraanController extends Controller
 
         $jumlahKendaraan = count($request->nama_korban);
 
+        // Loop untuk menyimpan data kendaraan
         for ($i = 0; $i < $jumlahKendaraan; $i++) {
             // Cek apakah file tersedia
             if ($request->hasFile('foto_barang_bukti.' . $i)) {
@@ -201,6 +203,7 @@ class ULSDataKendaraanController extends Controller
                 $fotoPath = null; // Jaga-jaga, tapi harusnya selalu ada
             }
 
+            // Simpan data ke UnitLakaDataKendaraan
             UnitLakaDataKendaraan::create([
                 'id' => Str::uuid(),
                 'laporan_polisi' => $request->laporan_polisi,
@@ -218,9 +221,26 @@ class ULSDataKendaraanController extends Controller
                 'foto_barang_bukti' => $fotoPath,
                 'keterangan' => $request->keterangan[$i] ?? null,
             ]);
+
+            // Simpan data ke AdminJrDataLaporan
+            AdminJrDataLaporan::create([
+                'id' => Str::uuid(),
+                'laporan_polisi' => $request->laporan_polisi,
+                'tanggal_laporan' => $request->tanggal_laporan,
+                'tanggal_kejadian' => $request->tanggal_kejadian,
+                'jenis_kendaraan' => $request->jenis_kendaraan[$i],
+                'masa_berlaku_pkb_sw' => $request->masa_berlaku_pkb_sw[$i],
+                'nomor_polisi' => $request->nomor_polisi[$i],
+                'foto_barang_bukti' => $fotoPath,
+                'status_perkara' => $request->status_perkara,
+                'estimasi_tunggakan' => null, // Kosongkan estimasi tunggakan, bisa diisi nanti
+                'catatan_hasil_survei' => null, // Kosongkan catatan hasil survei, bisa diisi nanti
+            ]);
         }
 
+        // Kembali ke halaman sebelumnya dengan pesan sukses
         return redirect()->back()->with('success', 'Data kendaraan berhasil disimpan!');
     }
+
 
 }

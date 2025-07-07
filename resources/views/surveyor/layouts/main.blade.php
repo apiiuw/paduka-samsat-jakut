@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
   
-        <title>Jasa Raharja | PADUKA</title>
+        <title>Petugas Surveyor | PADUKA</title>
         <link rel="icon" href="{{ asset('img/jasa-raharja/logo/logo-paduka.png') }}">
 
         {{-- CDN --}}
@@ -14,6 +14,9 @@
         <link href="https://fonts.cdnfonts.com/css/neck-l-sans" rel="stylesheet">
         <link href="https://fonts.cdnfonts.com/css/new-sosis" rel="stylesheet">
         <link href="https://fonts.cdnfonts.com/css/comiccomoc" rel="stylesheet">
+
+        {{-- ALPINE JS --}}
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
 
         {{-- ICON --}}
         <script src="https://kit.fontawesome.com/d7833bfda5.js" crossorigin="anonymous"></script>

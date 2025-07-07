@@ -34,7 +34,12 @@
               </div>
               <ul class="py-1" role="none">
                 <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-[#ADB7C1] hover:bg-red-600 hover:text-white" role="menuitem">Sign out</a>
+                  <form action="{{ route('signOut') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-[#ADB7C1] hover:bg-red-600 hover:text-white">
+                      Sign out
+                    </button>
+                  </form>
                 </li>
               </ul>
             </div>

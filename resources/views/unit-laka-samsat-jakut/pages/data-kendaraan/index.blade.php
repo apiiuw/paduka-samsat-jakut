@@ -68,7 +68,7 @@
 
          <!-- Search -->
          <div class="flex items-center gap-2 mb-4 text-sm">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketikkan Nomor Laporan atau Nomor Polisi" class="w-full border text-sm rounded px-4 py-2" />
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketikkan Laporan Polisi atau Nomor Polisi" class="w-full border text-sm rounded px-4 py-2" />
             <button class="bg-blueJR hover:bg-blueJRdark text-white px-4 py-2 rounded whitespace-nowrap">Cari Data</button>
          </div>
       </form>
