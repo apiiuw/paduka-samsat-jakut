@@ -142,16 +142,24 @@ class ULSDataKendaraanController extends Controller
         $request->validate([
             'status_perkara' => 'required|in:Selesai,Belum Selesai',
         ]);
-
-        // Ambil data yang sedang dipilih
-        $data = UnitLakaDataKendaraan::findOrFail($id);
-
-        // Ambil semua data dengan nomor laporan yang sama
-        UnitLakaDataKendaraan::where('laporan_polisi', $data->laporan_polisi)
+    
+        // Ambil data dari UnitLakaDataKendaraan berdasarkan id
+        $unitLakaData = UnitLakaDataKendaraan::findOrFail($id);
+    
+        // Ambil laporan_polisi dari data yang ditemukan
+        $laporanPolisi = $unitLakaData->laporan_polisi;
+    
+        // Update status_perkara pada UnitLakaDataKendaraan yang memiliki laporan_polisi yang sama
+        UnitLakaDataKendaraan::where('laporan_polisi', $laporanPolisi)
             ->update(['status_perkara' => $request->status_perkara]);
-
-        return back()->with('success', 'Semua status perkara dengan nomor laporan yang sama berhasil diperbarui.');
+    
+        // Update status_perkara pada AdminJrDataLaporan yang memiliki laporan_polisi yang sama
+        AdminJrDataLaporan::where('laporan_polisi', $laporanPolisi)
+            ->update(['status_perkara' => $request->status_perkara]);
+    
+        return back()->with('success', 'Status perkara berhasil diperbarui di UnitLakaDataKendaraan dan AdminJrDataLaporan.');
     }
+
 
     public function store(Request $request)
     {

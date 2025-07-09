@@ -19,6 +19,7 @@
 
     <!-- Logo -->
     <div class="relative z-20 flex justify-center items-center space-x-4 mb-6">
+        <img src="img/jasa-raharja/logo/logo-jasaraharja.png" alt="Logo Paduka" class="h-20 object-contain">
         <img src="/img/jasa-raharja/logo/logo-paduka.png" alt="Logo Paduka" class="h-20 object-contain">
         <img src="/img/unit-laka-samsat/logo/logo-samsat.png" alt="Logo Polisi" class="h-20 object-contain">
     </div>

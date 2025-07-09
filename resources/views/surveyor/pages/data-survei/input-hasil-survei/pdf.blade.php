@@ -67,14 +67,12 @@
                 <td><strong>Nama Lengkap</strong></td>
                 <td>{{ $data->nama_pemilik_kbm }}</td>
             </tr>
-            @if($data->foto_pemilik_kbm && file_exists(public_path('storage/' . $data->foto_pemilik_kbm)))
             <tr>
                 <td><strong>Foto Pemilik KBM</strong></td>
                 <td>
-                    <img src="{{ public_path('storage/' . $data->foto_pemilik_kbm) }}" alt="Foto Pemilik KBM" class="img-thumb">
+                    <img src="{{ url('storage/' . $data->foto_pemilik_kbm) }}" alt="Foto Pemilik KBM" class="img-thumb">
                 </td>
             </tr>
-            @endif
         </table>
     </div>
 

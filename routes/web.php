@@ -21,6 +21,11 @@ use App\Http\Controllers\Surveyor\SDataHasilSurveiController;
 |
 */
 
+// Redirect from "/" to "/sign-in"
+Route::get('/', function () {
+    return redirect()->route('signIn');
+});
+
 // AUTH
 Route::get('/sign-in', [SignInController::class, 'showSignInForm'])->name('signIn');
 Route::post('/sign-in', [SignInController::class, 'signIn']);

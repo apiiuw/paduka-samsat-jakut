@@ -25,15 +25,15 @@ class SDataHasilSurveiController extends Controller
 
         // Tentukan status_validasi berdasarkan email yang sedang login
         $statusValidasi = '';
-        if ($userEmail === 'surveyorjakartapusat@jr.com') {
+        if ($userEmail === 'surveyorjakartapusat@jrpaduka.com') {
             $statusValidasi = 'Jakarta Pusat';
-        } elseif ($userEmail === 'surveyorjakartautara@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartautara@jrpaduka.com') {
             $statusValidasi = 'Jakarta Utara';
-        } elseif ($userEmail === 'surveyorjakartatimur@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartatimur@jrpaduka.com') {
             $statusValidasi = 'Jakarta Timur';
-        } elseif ($userEmail === 'surveyorjakartabarat@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartabarat@jrpaduka.com') {
             $statusValidasi = 'Jakarta Barat';
-        } elseif ($userEmail === 'surveyorjakartaselatan@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartaselatan@jrpaduka.com') {
             $statusValidasi = 'Jakarta Selatan';
         }
 
@@ -150,15 +150,15 @@ class SDataHasilSurveiController extends Controller
 
         // Tentukan status_validasi berdasarkan email yang sedang login
         $statusValidasi = '';
-        if ($userEmail === 'surveyorjakartapusat@jr.com') {
+        if ($userEmail === 'surveyorjakartapusat@jrpaduka.com') {
             $statusValidasi = 'Jakarta Pusat';
-        } elseif ($userEmail === 'surveyorjakartautara@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartautara@jrpaduka.com') {
             $statusValidasi = 'Jakarta Utara';
-        } elseif ($userEmail === 'surveyorjakartatimur@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartatimur@jrpaduka.com') {
             $statusValidasi = 'Jakarta Timur';
-        } elseif ($userEmail === 'surveyorjakartabarat@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartabarat@jrpaduka.com') {
             $statusValidasi = 'Jakarta Barat';
-        } elseif ($userEmail === 'surveyorjakartaselatan@jr.com') {
+        } elseif ($userEmail === 'surveyorjakartaselatan@jrpaduka.com') {
             $statusValidasi = 'Jakarta Selatan';
         }
 
