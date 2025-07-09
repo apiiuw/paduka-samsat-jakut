@@ -91,7 +91,7 @@
                         <th class="border px-2 py-1">Jenis Kendaraan</th>
                         <th class="border px-2 py-1">Nomor Polisi</th>
                         <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
-                        <th class="border px-2 py-1">Estimasi Tunggakan</th>
+                        <th class="border px-2 py-1">Estimasi Tunggakan SW</th>
                         <th class="border px-2 py-1">Foto Barang Bukti</th>
                         <th class="border px-2 py-1">Status Validasi</th>
                         <th class="border px-2 py-1">Status Survei</th>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SignInController;
+use App\Http\Controllers\User\FormPenghapusanKendaraanController;
 use App\Http\Controllers\UnitLaka\ULSDataKendaraanController;
 use App\Http\Controllers\UnitLaka\ULSStatikKendaraanController;
 use App\Http\Controllers\AdminJR\AdminDataLaporanController;
@@ -26,7 +27,15 @@ Route::get('/', function () {
     return redirect()->route('signIn');
 });
 
-// AUTH
+// ==========================
+// User Tanpa Login
+// ==========================
+Route::get('/form-penghapusan-data-kendaraan', [FormPenghapusanKendaraanController::class, 'index'])->name('form-penghapusan-kendaraan');
+Route::post('/form-penghapusan-data-kendaraan', [FormPenghapusanKendaraanController::class, 'store']);
+
+// ==========================
+// Auth
+// ==========================
 Route::get('/sign-in', [SignInController::class, 'showSignInForm'])->name('signIn');
 Route::post('/sign-in', [SignInController::class, 'signIn']);
 Route::post('/sign-out', [SignInController::class, 'signOut'])->name('signOut');
