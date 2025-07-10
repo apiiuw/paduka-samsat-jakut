@@ -37,6 +37,14 @@
                <span class="flex-1 ms-3 whitespace-nowrap">Data Hasil Survei</span>
             </a>
          </li>
+         <li>
+            <a href="/jr/data-penghapusan" 
+               class="flex items-center p-2 rounded-lg group
+                  {{ request()->is('jr/data-penghapusan') ? 'text-white bg-blueJR' : 'text-[#ADB7C1] hover:text-white hover:bg-blueJRdark' }}">
+               <i class="fa-solid fa-file-circle-xmark fa-lg transition duration-75 group-hover:text-white"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Data Penghapusan</span>
+            </a>
+         </li>
       </ul>
    </div>
 </aside>

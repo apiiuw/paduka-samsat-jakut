@@ -5,7 +5,7 @@
    <div class="p-4 mt-24">
 
       <div class="bg-white p-4 rounded-xl shadow-md">
-         <p class="font-semibold text-lg text-[#373A3C]">Filter Data Laporan</p>
+         <p class="font-semibold text-lg text-[#373A3C]">Filter Data Hasil Survei</p>
          <hr class="bg-[#E8EEF2] h-[2px] mt-4 mb-8">
          <form action="{{ route('jr.data-hasil-survei.index') }}" method="GET" class="flex justify-between flex-wrap gap-2">
             <!-- Tahun -->

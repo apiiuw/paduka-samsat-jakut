@@ -89,7 +89,7 @@
         </div>
 
         <div>
-            <p>Yth. Dirlantas Polda....................<br><span class="address">Jl. ........................................</span><br><span class="address">.............................................</span></p>
+            <p>Yth. Dirlantas Polda Metro Jaya<br><span class="address">Jl. Jend. Sudirman, Kel. Senayan, Kec. Kebayoran Baru</span><br><span class="address">Kota Jakarta Selatan, DKI Jakarta</span></p>
         </div>
 
         <div class="header">

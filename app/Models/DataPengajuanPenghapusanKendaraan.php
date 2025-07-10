@@ -32,6 +32,7 @@ class DataPengajuanPenghapusanKendaraan extends Model
         'bahan_bakar_sumber_energi_kendaraan',
         'warna_tnkb_kendaraan',
         'nomor_bpkb_kendaraan',
-        'alasan_permohonan'
+        'alasan_permohonan',
+        'tanggal_form'
     ];
 }

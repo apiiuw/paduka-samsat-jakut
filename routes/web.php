@@ -8,6 +8,7 @@ use App\Http\Controllers\UnitLaka\ULSStatikKendaraanController;
 use App\Http\Controllers\AdminJR\AdminDataLaporanController;
 use App\Http\Controllers\AdminJR\AdminDataHasilSurveiController;
 use App\Http\Controllers\AdminJR\AdminStatistikLaporanController;
+use App\Http\Controllers\AdminJR\AdminDataPenghapusanController;
 use App\Http\Controllers\Surveyor\SDataWajibSurveiController;
 use App\Http\Controllers\Surveyor\SDataHasilSurveiController;
 
@@ -52,6 +53,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/jr/data-hasil-survei', fn () => view('jasa-raharja.pages.data-hasil-survei.index'));
     Route::get('/jr/data-hasil-survei', [AdminDataHasilSurveiController::class, 'index'])->name('jr.data-hasil-survei.index');
     Route::get('/jr/data-hasil-survei/unduh', [AdminDataHasilSurveiController::class, 'unduhLaporan'])->name('jr.hasil-survei.download');
+    Route::get('/jr/data-penghapusan', [AdminDataPenghapusanController::class, 'index'])->name('data-penghapusan.index');
 });
 
 // ==========================
