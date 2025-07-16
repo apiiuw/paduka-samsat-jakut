@@ -170,11 +170,11 @@
                             </td>
 
                             {{-- Tombol untuk menambahkan catatan hasil survei --}}
-                            <td class="border px-2 py-1">
+                            <td class="border px-2 py-1 whitespace-nowrap">
                                 @if ($item->catatan_hasil_survei)
                                     <button class="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Sudah Survei</button>
                                 @else
-                                    <a href="{{ route('surveyor.data-survei.input.tersangka', ['id' => $item->id]) }}"
+                                    <a href="{{ route('surveyor.data-survei.input', ['id' => $item->id]) }}"
                                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
                                         Input
                                     </a>
