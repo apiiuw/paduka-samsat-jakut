@@ -5,9 +5,9 @@
    <div class="p-4 mt-24">
 
       <div class="bg-white p-4 rounded-xl shadow-md">
-         <p class="font-semibold text-lg text-[#373A3C]">Filter Data Hasil Survei</p>
+         <p class="font-semibold text-lg text-[#373A3C]">Filter Data Laporan</p>
          <hr class="bg-[#E8EEF2] h-[2px] mt-4 mb-8">
-         <form action="{{ route('jr.data-hasil-survei.index') }}" method="GET" class="flex justify-between flex-wrap gap-2">
+         <form action="{{ route('surveyor.data-hasil-survei.index') }}" method="GET" class="flex justify-between flex-wrap gap-2">
             <!-- Tahun -->
             <div class="flex items-center gap-2">
                   <span class="text-sm text-gray-600">Tahun</span>
@@ -70,7 +70,7 @@
 
          <div class="flex items-center gap-2 mb-4 text-sm">
             <!-- Form Pencarian -->
-            <form action="{{ route('jr.data-hasil-survei.index') }}" method="GET" class="flex w-full">
+            <form action="{{ route('surveyor.data-hasil-survei.index') }}" method="GET" class="flex w-full">
                <!-- Input Pencarian -->
                <input type="text" name="search" placeholder="Ketikkan Laporan Polisi atau Nomor Polisi" value="{{ request('search') }}" class="flex-grow border text-sm rounded px-4 py-2 mr-2" />
                
@@ -81,20 +81,27 @@
 
          <!-- Table -->
          <div class="overflow-x-auto w-full">
-            <table class="min-w-[1600px] border text-sm text-left">
+            <table class="min-w-[2800px] border text-sm text-left">
                <thead class="bg-[#373D53] text-white text-center">
                      <tr>
                         <th class="border px-2 py-1">No</th>
                         <th class="border px-2 py-1">Laporan Polisi</th>
                         <th class="border px-2 py-1">Tanggal Laporan</th>
                         <th class="border px-2 py-1">Tanggal Kejadian</th>
-                        <th class="border px-2 py-1">Jenis Kendaraan</th>
-                        <th class="border px-2 py-1">Nomor Polisi</th>
-                        <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
-                        <th class="border px-2 py-1">Estimasi Tunggakan SW</th>
-                        <th class="border px-2 py-1">Foto Barang Bukti</th>
-                        <th class="border px-2 py-1">Status Survei</th>
-                        <th class="border px-2 py-1">File Hasil Survei</th>
+                        <th class="border px-2 py-1">Jenis Kendaraan Tersangka</th>
+                        <th class="border px-2 py-1">Nomor Polisi Tersangka</th>
+                        <th class="border px-2 py-1">Masa Berlaku SW Tersangka</th>
+                        <th class="border px-2 py-1">Estimasi Tunggakan Tersangka</th>
+                        <th class="border px-2 py-1">Foto Barang Bukti Tersangka</th>
+                        <th class="border px-2 py-1">Status Survei Tersangka</th>
+                        <th class="border px-2 py-1">File Hasil Survei Tersangka</th>
+                        <th class="border px-2 py-1">Jenis Kendaraan Korban</th>
+                        <th class="border px-2 py-1">Nomor Polisi Korban</th>
+                        <th class="border px-2 py-1">Masa Berlaku SW Korban</th>
+                        <th class="border px-2 py-1">Estimasi Tunggakan Korban</th>
+                        <th class="border px-2 py-1">Foto Barang Bukti Korban</th>
+                        <th class="border px-2 py-1">Status Survei Korban</th>
+                        <th class="border px-2 py-1">File Hasil Survei Korban</th>
                         <th class="border px-2 py-1">Status Perkara</th>
                      </tr>
                </thead>
@@ -112,25 +119,59 @@
                         <tr class="border-t text-center">
                             {{-- Tampilkan No, laporan_polisi, tanggal_laporan, dan tanggal_kejadian hanya pada baris pertama --}}
                             @if ($index == 0)
-                                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $no++ }}</td> <!-- Nomor urut -->
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $no++ }}</td> <!-- Nomor urut -->
                                 <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
-                                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
-                                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    {{ $item->jenis_kendaraan_tersangka ?? '-' }}
+                                </td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    {{ $item->nomor_polisi_tersangka ?? '-' }}
+                                </td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    {{ $item->masa_berlaku_pkb_sw_tersangka ? \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw_tersangka)->format('d/m/Y') : '-' }}
+                                </td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    Rp {{ number_format($item->estimasi_tunggakan_tersangka, 0, ',', '.') ?? '-' }}
+                                </td>
+                                <td class="border whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    <div class="flex justify-center px-2 py-1 whitespace-nowrap">
+                                        @if($item->foto_barang_bukti_tersangka)
+                                            <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                                onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                                        @else
+                                            <span>-</span>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    {{ $item->status_survei_tersangka ?? '-' }}
+                                </td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    @if ($item->catatan_hasil_survei_tersangka)
+                                        <a href="{{ asset($item->catatan_hasil_survei_tersangka) }}" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded">
+                                            Lihat PDF
+                                        </a>
+                                    @else
+                                        <span class="text-gray-400 italic">Belum ada</span>
+                                    @endif
+                                </td>
                             @endif
 
                             {{-- Data kendaraan ditampilkan di setiap baris --}}
-                            <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
-                            <td class="border px-2 py-1">{{ $item->nomor_polisi }}</td>
-                            <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap">{{ $item->jenis_kendaraan }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                             <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
-                            <td class="border px-2 py-1 flex justify-center">
+                            <td class="border px-2 py-1 flex justify-center whitespace-nowrap">
                                 <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
                                     onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
                             </td>
 
-                            <td class="border px-2 py-1">{{ $item->status_survei }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap">{{ $item->status_survei }}</td>
 
-                            <td class="border px-2 py-1">
+                            <td class="border px-2 py-1 whitespace-nowrap">
                               @if ($item->catatan_hasil_survei)
                                  <a href="{{ asset($item->catatan_hasil_survei) }}" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded">
                                        Lihat PDF
@@ -143,7 +184,7 @@
 
                             {{-- Status Perkara hanya ditampilkan pada baris pertama untuk setiap grup --}}
                             @if ($index == 0)
-                                <td class="border px-2 py-1 text-center" rowspan="{{ $rowspan }}">
+                                <td class="border px-2 py-1 text-center whitespace-nowrap" rowspan="{{ $rowspan }}">
                                     <span class="font-semibold {{ $item->status_perkara == 'Selesai' ? 'text-green-600' : 'text-red-600' }}">
                                         {{ $item->status_perkara }}
                                     </span>
@@ -154,6 +195,7 @@
 
                      @endforeach
                </tbody>
+
             </table>
          </div>
 
@@ -188,7 +230,7 @@
                      <button class="px-3 py-1 border rounded bg-gray-200 ml-1" disabled>Next</button>
                @endif
             </div>
-            <button onclick="window.location='{{ route('jr.hasil-survei.download', request()->query()) }}'" class="bg-blueJR text-white px-6 py-2 rounded">Unduh Data</button>
+            <button onclick="window.location='{{ route('surveyor.data-hasil-survei.download', request()->query()) }}'" class="bg-blueJR text-white px-6 py-2 rounded">Unduh Data</button>
          </div>
       </div>
 
