@@ -80,6 +80,7 @@ class AdminDataLaporanController extends Controller
         foreach ($dataLaporan as $laporan) {
             // Menghitung selisih tahun antara tahun sekarang dan masa berlaku PKB/SW
             $yearsDifference = $currentYear - \Carbon\Carbon::parse($laporan->masa_berlaku_pkb_sw)->year;
+            $yearsDifferenceTersangka = $currentYear - \Carbon\Carbon::parse($laporan->masa_berlaku_pkb_sw_tersangka)->year;
 
             // Tentukan nominal berdasarkan jenis kendaraan
             switch ($laporan->jenis_kendaraan) {
@@ -95,12 +96,27 @@ class AdminDataLaporanController extends Controller
                     break;
             }
 
+            switch ($laporan->jenis_kendaraan_tersangka) {
+                case 'Roda 2':
+                case 'Roda 3':
+                    $nominalTersangka = 35000;
+                    break;
+                case 'Roda 4':
+                    $nominalTersangka = 143000;
+                    break;
+                default:
+                    $nominalTersangka = 163000;  // Untuk kendaraan roda di atas 4
+                    break;
+            }
+
             // Hitung estimasi tunggakan
             $estimasiTunggakan = $yearsDifference * $nominal;
+            $estimasiTunggakanTersangka = $yearsDifferenceTersangka * $nominalTersangka;
 
             // Simpan estimasi tunggakan ke database
             $laporan->estimasi_tunggakan = $estimasiTunggakan;
-            $laporan->save(); // Menyimpan perubahan ke database
+            $laporan->estimasi_tunggakan_tersangka = $estimasiTunggakanTersangka;
+            $laporan->save(); 
         }
 
         // Kirim data ke view
@@ -209,7 +225,6 @@ class AdminDataLaporanController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        // Validate the input (ensure it's one of the valid regions)
         $request->validate([
             'status_validasi' => 'required|in:Jakarta Pusat,Jakarta Utara,Jakarta Selatan,Jakarta Timur,Jakarta Barat',
         ]);
@@ -223,5 +238,17 @@ class AdminDataLaporanController extends Controller
         return redirect()->route('jr.data-laporan.index')->with('success', 'Status Validasi berhasil diperbarui');
     }
 
+    public function updateStatusTersangka(Request $request, $id)
+    {
+        $request->validate([
+            'status_validasi_tersangka' => 'required|in:Jakarta Pusat,Jakarta Utara,Jakarta Selatan,Jakarta Timur,Jakarta Barat',
+        ]);
 
+        // Find the record by ID and update the status
+        $laporan = AdminJrDataLaporan::findOrFail($id);
+        $laporan->status_validasi_tersangka = $request->input('status_validasi_tersangka');
+        $laporan->save();
+
+        return redirect()->route('jr.data-laporan.index')->with('success', 'Status Validasi berhasil diperbarui');
+    }
 }

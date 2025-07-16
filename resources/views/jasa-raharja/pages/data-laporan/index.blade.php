@@ -81,20 +81,27 @@
 
          <!-- Table -->
          <div class="overflow-x-auto w-full">
-            <table class="min-w-[1600px] border text-sm text-left">
+            <table class="min-w-[2500px] border text-sm text-left">
                <thead class="bg-[#373D53] text-white text-center">
                      <tr>
                         <th class="border px-2 py-1">No</th>
                         <th class="border px-2 py-1">Laporan Polisi</th>
                         <th class="border px-2 py-1">Tanggal Laporan</th>
                         <th class="border px-2 py-1">Tanggal Kejadian</th>
-                        <th class="border px-2 py-1">Jenis Kendaraan</th>
-                        <th class="border px-2 py-1">Nomor Polisi</th>
-                        <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
-                        <th class="border px-2 py-1">Estimasi Tunggakan SW</th>
-                        <th class="border px-2 py-1">Foto Barang Bukti</th>
-                        <th class="border px-2 py-1">Status Validasi</th>
-                        <th class="border px-2 py-1">Status Survei</th>
+                        <th class="border px-2 py-1">Jenis Kendaraan Tersangka</th>
+                        <th class="border px-2 py-1">Nomor Polisi Tersangka</th>
+                        <th class="border px-2 py-1">Masa Berlaku SW Tersangka</th>
+                        <th class="border px-2 py-1">Estimasi Tunggakan Tersangka</th>
+                        <th class="border px-2 py-1">Foto Barang Bukti Tersangka</th>
+                        <th class="border px-2 py-1">Status Validasi Tersangka</th>
+                        <th class="border px-2 py-1">Status Survei Tersangka</th>
+                        <th class="border px-2 py-1">Jenis Kendaraan Korban</th>
+                        <th class="border px-2 py-1">Nomor Polisi Korban</th>
+                        <th class="border px-2 py-1">Masa Berlaku SW Korban</th>
+                        <th class="border px-2 py-1">Estimasi Tunggakan SW korban</th>
+                        <th class="border px-2 py-1">Foto Barang Bukti Korban</th>
+                        <th class="border px-2 py-1">Status Validasi Korban</th>
+                        <th class="border px-2 py-1">Status Survei Korban</th>
                         <th class="border px-2 py-1">Status Perkara</th>
                      </tr>
                </thead>
@@ -116,9 +123,39 @@
                                     <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
                                     <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
                                     <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+                                    <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->jenis_kendaraan_tersangka }}</td>
+                                    <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->nomor_polisi_tersangka }}</td>
+                                    <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw_tersangka)->format('d/m/Y') }}</td>
+                                    <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">Rp {{ number_format($item->estimasi_tunggakan_tersangka, 0, ',', '.') }}</td>
+                                    <td class="border px-2 py-1" rowspan="{{ $rowspan }}">
+                                       <div class="flex justify-center w-full">
+                                          <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                          onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                                       </div>
+                                    </td>
+                                    <form action="{{ route('jr.updateStatusTersangka', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                       <select name="status_validasi_tersangka" class="form-control" onchange="this.form.submit()">
+                                          <option value="" disabled {{ !$item->status_validasi_tersangka ? 'selected' : '' }}>Pilih Status</option>
+                                          <option value="Jakarta Pusat" {{ $item->status_validasi_tersangka == 'Jakarta Pusat' ? 'selected' : '' }}>Jakarta Pusat</option>
+                                          <option value="Jakarta Utara" {{ $item->status_validasi_tersangka == 'Jakarta Utara' ? 'selected' : '' }}>Jakarta Utara</option>
+                                          <option value="Jakarta Selatan" {{ $item->status_validasi_tersangka == 'Jakarta Selatan' ? 'selected' : '' }}>Jakarta Selatan</option>
+                                          <option value="Jakarta Timur" {{ $item->status_validasi_tersangka == 'Jakarta Timur' ? 'selected' : '' }}>Jakarta Timur</option>
+                                          <option value="Jakarta Barat" {{ $item->status_validasi_tersangka == 'Jakarta Barat' ? 'selected' : '' }}>Jakarta Barat</option>
+                                       </select>
+                                    </td>
+                                    </form>
+                                    <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                       @if($item->status_survei_tersangka === 'Selesai Survei')
+                                          <span class="text-green-600 font-semibold">{{ $item->status_survei_tersangka }}</span>
+                                       @else
+                                          <span class="text-red-600 font-semibold">{{ $item->status_survei_tersangka }}</span>
+                                       @endif
+                                    </td>
                                  @endif
 
-                                 {{-- Data kendaraan ditampilkan di setiap baris --}}
                                  <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
                                  <td class="border px-2 py-1">{{ $item->nomor_polisi }}</td>
                                  <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
@@ -130,7 +167,7 @@
 
                                  <form action="{{ route('jr.updateStatus', $item->id) }}" method="POST">
                                     @csrf
-                                    @method('PUT') <!-- Using PUT for update -->
+                                    @method('PUT')
                                     <td class="border px-2 py-1">
                                        <select name="status_validasi" class="form-control" onchange="this.form.submit()">
                                              <!-- Default option (empty) to prompt the user to select if they haven't already -->
@@ -144,7 +181,7 @@
                                     </td>
                                  </form>
 
-                                 <td class="border px-2 py-1">
+                                 <td class="border px-2 py-1 whitespace-nowrap">
                                     @if($item->status_survei === 'Selesai Survei')
                                           <span class="text-green-600 font-semibold">{{ $item->status_survei }}</span>
                                     @else

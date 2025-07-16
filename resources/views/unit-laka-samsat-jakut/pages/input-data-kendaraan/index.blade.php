@@ -35,7 +35,6 @@
                         <option value="T.1">T.1</option>
                         <option value="T.2">T.2</option>
                         <option value="T.3">T.3</option>
-                        <option value="T.4">T.4</option>
                     </select>
                 </div>
 
@@ -46,6 +45,56 @@
                         <option value="Selesai">Selesai</option>
                         <option value="Belum Selesai">Belum Selesai</option>
                     </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium">Nama Tersangka</label>
+                    <input name="nama_tersangka_global" type="text"
+                        placeholder="Ketikkan Nama Tersangka..."
+                        class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+
+                <div class="mt-4">
+                    <label class="block text-sm font-medium">Jenis Kendaraan Tersangka</label>
+                    <select name="jenis_kendaraan_tersangka" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                        <option value="">Pilih Jenis Kendaraan</option>
+                        <option value="Roda 2">Roda 2</option>
+                        <option value="Roda 3">Roda 3</option>
+                        <option value="Roda 4">Roda 4</option>
+                        <option value="Diatas Roda 4">Diatas Roda 4</option>
+                    </select>
+                </div>
+
+                <div x-data="nopolHandler()" class="space-y-1">
+                    <label class="block text-sm font-medium">Nomor Polisi Tersangka</label>
+
+                    <div x-show="!tanpaNopol">
+                        <div class="flex items-center space-x-1">
+                            <input type="text" x-model="part1" @input="updateNomorPolisi" maxlength="2" class="uppercase text-center w-14 border border-gray-300 rounded px-2 py-2 text-sm">
+                            <span class="text-lg font-semibold">-</span>
+                            <input type="text" x-model="part2" @input="updateAngkaOnly(); updateNomorPolisi()" maxlength="4" inputmode="numeric" class="text-center w-20 border border-gray-300 rounded px-2 py-2 text-sm">
+                            <span class="text-lg font-semibold">-</span>
+                            <input type="text" x-model="part3" @input="updateNomorPolisi" maxlength="3" class="uppercase text-center w-16 border border-gray-300 rounded px-2 py-2 text-sm">
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="nomor_polisi_tersangka" :value="tanpaNopol ? 'Tanpa Nomor Polisi' : full">
+                    <div class="mt-2">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" x-model="tanpaNopol" @change="handleTanpaNopol">
+                            <span class="ml-2 text-sm">Tanpa Nomor Polisi</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div x-data="masaBerlakuHandler()" class="mt-4">
+                    <label class="block text-sm font-medium">Masa Berlaku PKB/SW Tersangka</label>
+                    <input name="masa_berlaku_pkb_sw_tersangka" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+
+                <div class="mt-4">
+                    <label class="block text-sm font-medium">Foto Barang Bukti Tersangka</label>
+                    <input name="foto_barang_bukti_tersangka" type="file" accept="image/*" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 bg-white">
                 </div>
 
                 <div class="bg-white shadow rounded-lg p-6 text-sm mt-10">
@@ -64,11 +113,6 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium">Nama Tersangka</label>
-                                <input :name="'nama_tersangka[]'" type="text" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
-                            </div>
-
-                            <div>
                                 <label class="block text-sm font-medium">Jenis Kendaraan</label>
                                 <select :name="'jenis_kendaraan[]'" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                                     <option value="">Pilih Jenis Kendaraan</option>
@@ -81,27 +125,34 @@
 
                             <div x-data="nopolHandler()" class="space-y-1">
                                 <label class="block text-sm font-medium">Nomor Polisi</label>
-                                <div class="flex items-center space-x-1">
-                                    <input type="text" x-model="part1" @input="updateNomorPolisi" maxlength="2"
-                                        class="uppercase text-center w-14 border border-gray-300 rounded px-2 py-2 text-sm"
-                                        placeholder="">
 
-                                    <span class="text-lg font-semibold">-</span>
+                                <div x-show="!tanpaNopol">
+                                    <div class="flex items-center space-x-1">
+                                        <input type="text" x-model="part1" @input="updateNomorPolisi" maxlength="2"
+                                            class="uppercase text-center w-14 border border-gray-300 rounded px-2 py-2 text-sm">
 
-                                    <input type="text" x-model="part2" @input="updateAngkaOnly(); updateNomorPolisi()" maxlength="4"
-                                        inputmode="numeric"
-                                        class="text-center w-20 border border-gray-300 rounded px-2 py-2 text-sm"
-                                        placeholder="">
+                                        <span class="text-lg font-semibold">-</span>
 
-                                    <span class="text-lg font-semibold">-</span>
+                                        <input type="text" x-model="part2" @input="updateAngkaOnly(); updateNomorPolisi()" maxlength="4"
+                                            inputmode="numeric"
+                                            class="text-center w-20 border border-gray-300 rounded px-2 py-2 text-sm">
 
-                                    <input type="text" x-model="part3" @input="updateNomorPolisi" maxlength="3"
-                                        class="uppercase text-center w-16 border border-gray-300 rounded px-2 py-2 text-sm"
-                                        placeholder="">
+                                        <span class="text-lg font-semibold">-</span>
+
+                                        <input type="text" x-model="part3" @input="updateNomorPolisi" maxlength="3"
+                                            class="uppercase text-center w-16 border border-gray-300 rounded px-2 py-2 text-sm">
+                                    </div>
                                 </div>
 
                                 <!-- Hidden input untuk dikirim ke backend -->
-                                <input type="hidden" name="nomor_polisi[]" :value="full">
+                                <input type="hidden" name="nomor_polisi[]" :value="tanpaNopol ? 'Tanpa Nomor Polisi' : full">
+
+                                <div class="mt-2">
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" x-model="tanpaNopol" @change="handleTanpaNopol">
+                                        <span class="ml-2 text-sm">Tanpa Nomor Polisi</span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div>
@@ -247,6 +298,7 @@ function nopolHandler() {
         part2: '',
         part3: '',
         full: '',
+        tanpaNopol: false,
 
         updateAngkaOnly() {
             this.part2 = this.part2.replace(/[^0-9]/g, '');
@@ -257,9 +309,21 @@ function nopolHandler() {
             const p2 = this.part2.trim();
             const p3 = this.part3.toUpperCase().trim();
             this.full = [p1, p2, p3].filter(Boolean).join('-');
+        },
+
+        handleTanpaNopol() {
+            if (this.tanpaNopol) {
+                this.full = 'Tanpa Nomor Polisi';
+                this.part1 = '';
+                this.part2 = '';
+                this.part3 = '';
+            } else {
+                this.full = '';
+            }
         }
     }
 }
+
 </script>
 
 @endsection

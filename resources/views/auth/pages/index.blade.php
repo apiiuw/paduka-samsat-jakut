@@ -28,7 +28,7 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm z-20">
         <div class="flex flex-col items-center mb-6">
             <h1 class="text-3xl font-semibold text-center mb-2">Masuk Akun</h1>
-            <p class="text-center text-sm text-gray-600">Penghapusan Data Kendaraan Melalui Asuransi Umum Unit Laka Lantas Polri</p>
+            <p class="text-center text-sm text-gray-600">Penghapusan Data Unit Kendaraan melalui Lakalantas Polri</p>
         </div>
 
         <form action="{{ route('signIn') }}" method="POST" class="space-y-4">

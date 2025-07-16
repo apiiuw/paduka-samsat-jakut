@@ -17,7 +17,6 @@ class ULSDataKendaraanController extends Controller
     {
         $query = UnitLakaDataKendaraan::query();
 
-        // Pencarian berdasarkan kolom laporan_polisi atau nomor_polisi
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('laporan_polisi', 'like', '%' . $request->search . '%')
@@ -25,13 +24,11 @@ class ULSDataKendaraanController extends Controller
             });
         }
 
-        // Filter berdasarkan tahun
         if ($request->filled('tahun')) {
             $tahun = explode('/', $request->tahun)[0];
             $query->whereYear('tanggal_laporan', $tahun);
         }
 
-        // Filter berdasarkan bulan
         if ($request->filled('bulan')) {
             $bulanMap = [
                 'Januari' => 1,
@@ -63,6 +60,8 @@ class ULSDataKendaraanController extends Controller
         if ($request->filled('status_perkara')) {
             $query->where('status_perkara', $request->status_perkara);
         }
+
+        $query->orderBy('laporan_polisi', 'asc');
 
         // Ambil semua data
         $allData = $query->get();
@@ -129,6 +128,8 @@ class ULSDataKendaraanController extends Controller
             $query->where('status_perkara', $request->status_perkara);
         }
 
+        $query->orderBy('laporan_polisi', 'asc');
+
         $data = $query->get(); // Tanpa pagination karena mau PDF full
 
         $pdf = Pdf::loadView('unit-laka-samsat-jakut.pages.data-kendaraan.pdf', compact('data'))
@@ -160,6 +161,41 @@ class ULSDataKendaraanController extends Controller
         return back()->with('success', 'Status perkara berhasil diperbarui di UnitLakaDataKendaraan dan AdminJrDataLaporan.');
     }
 
+    public function updateStatusKendaraanTersangka(Request $request, $id)
+    {
+        $request->validate([
+            'status_kendaraan_tersangka' => 'required|in:Sudah Dikembalikan,Belum Dikembalikan',
+        ]);
+
+        // Ambil data UnitLakaDataKendaraan berdasarkan id
+        $data = UnitLakaDataKendaraan::findOrFail($id);
+
+        // Ambil laporan_polisi dari data yang ditemukan
+        $laporanPolisi = $data->laporan_polisi;
+
+        // Update status_kendaraan_tersangka pada semua data UnitLakaDataKendaraan yang memiliki laporan_polisi yang sama
+        UnitLakaDataKendaraan::where('laporan_polisi', $laporanPolisi)
+            ->update(['status_kendaraan_tersangka' => $request->status_kendaraan_tersangka]);  // Update status kendaraan tersangka
+
+        return back()->with('success', 'Status kendaraan tersangka berhasil diperbarui di seluruh laporan dengan Laporan Polisi yang sama.');
+    }
+
+    public function updateStatusKendaraanKorban(Request $request, $id)
+    {
+        $request->validate([
+            'status_kendaraan_korban' => 'required|in:Sudah Dikembalikan,Belum Dikembalikan',
+        ]);
+
+        // Ambil data UnitLakaDataKendaraan berdasarkan id
+        $data = UnitLakaDataKendaraan::findOrFail($id);
+
+        // Update status_kendaraan_korban pada data kendaraan yang spesifik
+        $data->update([
+            'status_kendaraan_korban' => $request->status_kendaraan_korban,
+        ]);
+
+        return back()->with('success', 'Status kendaraan korban berhasil diperbarui.');
+    }
 
     public function store(Request $request)
     {
@@ -171,11 +207,15 @@ class ULSDataKendaraanController extends Controller
             'kode_penyidik' => 'required|string',
             'status_perkara' => 'required|string',
 
+            // tambahan baru
+            'nama_tersangka_global' => 'nullable|string',
+            'nomor_polisi_tersangka' => 'nullable|string',
+            'jenis_kendaraan_tersangka' => 'nullable|string',
+            'masa_berlaku_pkb_sw_tersangka' => 'nullable|date',
+            'foto_barang_bukti_tersangka' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+
             'nama_korban' => 'required|array',
             'nama_korban.*' => 'required|string',
-
-            'nama_tersangka' => 'nullable|array',
-            'nama_tersangka.*' => 'nullable|string',
 
             'jenis_kendaraan' => 'required|array',
             'jenis_kendaraan.*' => 'required|string',
@@ -183,24 +223,34 @@ class ULSDataKendaraanController extends Controller
             'nomor_polisi' => 'required|array',
             'nomor_polisi.*' => 'required|string',
 
-            'masa_berlaku_pkb_sw' => 'required|array',
-            'masa_berlaku_pkb_sw.*' => 'required|date',
+            'masa_berlaku_pkb_sw' => 'nullable|array',
+            'masa_berlaku_pkb_sw.*' => 'nullable|date',
 
             'total_kerugian' => 'required|array',
             'total_kerugian.*' => 'required|numeric',
 
-            'foto_barang_bukti' => 'required|array',
-            'foto_barang_bukti.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_barang_bukti' => 'nullable|array',
+            'foto_barang_bukti.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
 
             'keterangan' => 'nullable|array',
             'keterangan.*' => 'nullable|string',
         ]);
 
+        // Proses upload foto tersangka
+        $fotoTersangkaPath = null;
+        if ($request->hasFile('foto_barang_bukti_tersangka')) {
+            $file = $request->file('foto_barang_bukti_tersangka');
+            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $path = 'data/unit-laka-samsat-jakut/data-kendaraan/';
+            $file->move(public_path($path), $filename);
+            $fotoTersangkaPath = $path . $filename;
+        }
+
+        // Simpan data kendaraan
         $jumlahKendaraan = count($request->nama_korban);
 
-        // Loop untuk menyimpan data kendaraan
         for ($i = 0; $i < $jumlahKendaraan; $i++) {
-            // Cek apakah file tersedia
+            // Cek apakah foto barang bukti tersedia untuk korban
             if ($request->hasFile('foto_barang_bukti.' . $i)) {
                 $file = $request->file('foto_barang_bukti')[$i];
                 $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
@@ -208,10 +258,10 @@ class ULSDataKendaraanController extends Controller
                 $file->move(public_path($path), $filename);
                 $fotoPath = $path . $filename;
             } else {
-                $fotoPath = null; // Jaga-jaga, tapi harusnya selalu ada
+                $fotoPath = null;
             }
 
-            // Simpan data ke UnitLakaDataKendaraan
+            // Simpan data kendaraan (untuk tabel UnitLakaDataKendaraan)
             UnitLakaDataKendaraan::create([
                 'id' => Str::uuid(),
                 'laporan_polisi' => $request->laporan_polisi,
@@ -219,34 +269,44 @@ class ULSDataKendaraanController extends Controller
                 'tanggal_kejadian' => $request->tanggal_kejadian,
                 'kode_penyidik' => $request->kode_penyidik,
                 'status_perkara' => $request->status_perkara,
-
+                'status_kendaraan_korban' => 'Belum Dikembalikan', // Status kendaraan korban
+                'status_kendaraan_tersangka' => 'Belum Dikembalikan', // Status kendaraan tersangka
+                'nama_tersangka' => $request->nama_tersangka_global ?? null,
+                'nomor_polisi_tersangka' => $request->nomor_polisi_tersangka,
+                'jenis_kendaraan_tersangka' => $request->jenis_kendaraan_tersangka,
                 'nama_korban' => $request->nama_korban[$i],
-                'nama_tersangka' => $request->nama_tersangka[$i] ?? null,
                 'jenis_kendaraan' => $request->jenis_kendaraan[$i],
                 'nomor_polisi' => $request->nomor_polisi[$i],
                 'masa_berlaku_pkb_sw' => $request->masa_berlaku_pkb_sw[$i],
+                'masa_berlaku_pkb_sw_tersangka' => $request->masa_berlaku_pkb_sw_tersangka,
                 'total_kerugian' => $request->total_kerugian[$i],
                 'foto_barang_bukti' => $fotoPath,
+                'foto_barang_bukti_tersangka' => $fotoTersangkaPath,
                 'keterangan' => $request->keterangan[$i] ?? null,
             ]);
 
-            // Simpan data ke AdminJrDataLaporan
+            // Simpan data ke AdminJrDataLaporan (untuk data korban dan tersangka dalam 1 create)
             AdminJrDataLaporan::create([
                 'id' => Str::uuid(),
                 'laporan_polisi' => $request->laporan_polisi,
                 'tanggal_laporan' => $request->tanggal_laporan,
                 'tanggal_kejadian' => $request->tanggal_kejadian,
-                'jenis_kendaraan' => $request->jenis_kendaraan[$i],
-                'masa_berlaku_pkb_sw' => $request->masa_berlaku_pkb_sw[$i],
-                'nomor_polisi' => $request->nomor_polisi[$i],
-                'foto_barang_bukti' => $fotoPath,
+                'jenis_kendaraan' => $request->jenis_kendaraan[$i], // Data korban
+                'masa_berlaku_pkb_sw' => $request->masa_berlaku_pkb_sw[$i], // Data korban
+                'nomor_polisi' => $request->nomor_polisi[$i], // Data korban
+                'foto_barang_bukti' => $fotoPath, // Data korban
                 'status_perkara' => $request->status_perkara,
-                'estimasi_tunggakan' => null, // Kosongkan estimasi tunggakan, bisa diisi nanti
-                'catatan_hasil_survei' => null, // Kosongkan catatan hasil survei, bisa diisi nanti
+                'estimasi_tunggakan' => null,
+                'catatan_hasil_survei' => null,
+
+                // Data tersangka (sama di dalam 1 create)
+                'jenis_kendaraan_tersangka' => $request->jenis_kendaraan_tersangka, // Data tersangka
+                'masa_berlaku_pkb_sw_tersangka' => $request->masa_berlaku_pkb_sw_tersangka, // Data tersangka
+                'nomor_polisi_tersangka' => $request->nomor_polisi_tersangka, // Data tersangka
+                'foto_barang_bukti_tersangka' => $fotoTersangkaPath, // Data tersangka
             ]);
         }
 
-        // Kembali ke halaman sebelumnya dengan pesan sukses
         return redirect()->back()->with('success', 'Data kendaraan berhasil disimpan!');
     }
 

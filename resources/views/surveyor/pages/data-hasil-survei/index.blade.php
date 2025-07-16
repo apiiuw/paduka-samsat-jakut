@@ -98,62 +98,90 @@
                         <th class="border px-2 py-1">Status Perkara</th>
                      </tr>
                </thead>
-               <tbody class="bg-white">
-                     @php
-                        $no = 1; // Inisialisasi variabel $no
-                     @endphp
+<tbody class="bg-white">
+    @php
+        $no = 1; // Inisialisasi variabel $no
+    @endphp
 
-                     @foreach ($dataLaporan->groupBy('laporan_polisi') as $laporanPolisi => $items)
-                        @php
-                           $rowspan = $items->count(); // Menghitung jumlah baris untuk laporan yang sama
-                        @endphp
+    @foreach ($dataLaporan->groupBy('laporan_polisi') as $laporanPolisi => $items)
+        @php
+            $rowspan = $items->count(); // Menghitung jumlah baris untuk laporan yang sama
+        @endphp
 
-                        @foreach ($items as $index => $item)
-                        <tr class="border-t text-center">
-                            {{-- Tampilkan No, laporan_polisi, tanggal_laporan, dan tanggal_kejadian hanya pada baris pertama --}}
-                            @if ($index == 0)
-                                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $no++ }}</td> <!-- Nomor urut -->
-                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
-                                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
-                                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
-                            @endif
+        @foreach ($items as $index => $item)
+        <tr class="border-t text-center">
+            {{-- Tampilkan No, laporan_polisi, tanggal_laporan, dan tanggal_kejadian hanya pada baris pertama --}}
+            @if ($index == 0)
+                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $no++ }}</td> <!-- Nomor urut -->
+                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
+                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
+                <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+            @endif
 
-                            {{-- Data kendaraan ditampilkan di setiap baris --}}
-                            <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
-                            <td class="border px-2 py-1">{{ $item->nomor_polisi }}</td>
-                            <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
-                            <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
-                            <td class="border px-2 py-1 flex justify-center">
-                                <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                                    onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
-                            </td>
+            {{-- Menampilkan data tersangka terlebih dahulu (jika ada) --}}
+            @if($item->jenis_kendaraan_tersangka || $item->nomor_polisi_tersangka || $item->masa_berlaku_pkb_sw_tersangka || $item->estimasi_tunggakan_tersangka || $item->foto_barang_bukti_tersangka || $item->status_validasi_tersangka || $item->catatan_hasil_survei_tersangka)
+                <tr class="border-t">
+                    <td class="border px-2 py-1">{{ $item->jenis_kendaraan_tersangka }}</td>
+                    <td class="border px-2 py-1">{{ $item->nomor_polisi_tersangka }}</td>
+                    <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw_tersangka)->format('d/m/Y') }}</td>
+                    <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan_tersangka, 0, ',', '.') }}</td>
+                    <td class="border px-2 py-1 flex justify-center">
+                        <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                            onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                    </td>
 
-                            <td class="border px-2 py-1">{{ $item->status_survei }}</td>
+                    <td class="border px-2 py-1">{{ $item->status_validasi_tersangka }}</td>
 
-                            <td class="border px-2 py-1">
-                              @if ($item->catatan_hasil_survei)
-                                 <a href="{{ asset($item->catatan_hasil_survei) }}" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded">
-                                       Lihat PDF
-                                 </a>
-                              @else
-                                 <span class="text-gray-400 italic">Belum ada</span>
-                              @endif
-                            </td>
+                    <td class="border px-2 py-1">
+                      @if ($item->catatan_hasil_survei_tersangka)
+                         <a href="{{ asset($item->catatan_hasil_survei_tersangka) }}" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded">
+                               Lihat PDF
+                         </a>
+                      @else
+                         <span class="text-gray-400 italic">Belum ada</span>
+                      @endif
+                    </td>
+                </tr>
+            @endif
 
+            {{-- Data kendaraan ditampilkan di setiap baris --}}
+            <tr class="border-t text-center">
+                <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
+                <td class="border px-2 py-1">{{ $item->nomor_polisi }}</td>
+                <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
+                <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
+                <td class="border px-2 py-1 flex justify-center">
+                    <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                        onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                </td>
 
-                            {{-- Status Perkara hanya ditampilkan pada baris pertama untuk setiap grup --}}
-                            @if ($index == 0)
-                                <td class="border px-2 py-1 text-center" rowspan="{{ $rowspan }}">
-                                    <span class="font-semibold {{ $item->status_perkara == 'Selesai' ? 'text-green-600' : 'text-red-600' }}">
-                                        {{ $item->status_perkara }}
-                                    </span>
-                                </td>
-                            @endif
-                        </tr>
-                        @endforeach
+                <td class="border px-2 py-1">{{ $item->status_survei }}</td>
 
-                     @endforeach
-               </tbody>
+                <td class="border px-2 py-1">
+                  @if ($item->catatan_hasil_survei)
+                     <a href="{{ asset($item->catatan_hasil_survei) }}" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded">
+                           Lihat PDF
+                     </a>
+                  @else
+                     <span class="text-gray-400 italic">Belum ada</span>
+                  @endif
+                </td>
+            </tr>
+
+            {{-- Status Perkara hanya ditampilkan pada baris pertama untuk setiap grup --}}
+            @if ($index == 0)
+                <td class="border px-2 py-1 text-center" rowspan="{{ $rowspan }}">
+                    <span class="font-semibold {{ $item->status_perkara == 'Selesai' ? 'text-green-600' : 'text-red-600' }}">
+                        {{ $item->status_perkara }}
+                    </span>
+                </td>
+            @endif
+        </tr>
+        @endforeach
+
+    @endforeach
+</tbody>
+
             </table>
          </div>
 

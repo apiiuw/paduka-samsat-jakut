@@ -98,6 +98,10 @@ class ULSStatikKendaraanController extends Controller
         // Gabungkan data berdasarkan laporan_polisi
         $groupedData = $allData->groupBy('laporan_polisi')->values();
 
+        $groupedData = $groupedData->sortBy(function($group) {
+            return $group->first()->laporan_polisi;
+        });
+
         $totalData = $groupedData->count();
         $totalSelesai = $groupedData->filter(fn($group) => $group->first()->status_perkara === 'Selesai')->count();
         $totalBelumSelesai = $groupedData->filter(fn($group) => $group->first()->status_perkara === 'Belum Selesai')->count();

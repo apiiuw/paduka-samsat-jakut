@@ -15,8 +15,13 @@ class UnitLakaDataKendaraan extends Model
         'laporan_polisi',
         'tanggal_laporan',
         'tanggal_kejadian',
-        'nama_korban',
         'nama_tersangka',
+        'jenis_kendaraan_tersangka',
+        'nomor_polisi_tersangka',
+        'masa_berlaku_pkb_sw_tersangka',
+        'foto_barang_bukti_tersangka',
+        'status_kendaraan_tersangka',
+        'nama_korban',
         'jenis_kendaraan',
         'nomor_polisi',
         'masa_berlaku_pkb_sw',
@@ -24,6 +29,7 @@ class UnitLakaDataKendaraan extends Model
         'kode_penyidik',
         'foto_barang_bukti',
         'keterangan',
+        'status_kendaraan_korban',
         'status_perkara',
     ];
 }

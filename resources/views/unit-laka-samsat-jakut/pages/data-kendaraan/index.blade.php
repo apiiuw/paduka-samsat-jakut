@@ -75,7 +75,7 @@
 
       <!-- Table -->
       <div class="overflow-x-auto w-full">
-         <table class="min-w-[1700px] border text-sm text-left">
+         <table class="min-w-[2400px] border text-sm text-left">
             <thead class="bg-[#373D53] text-white text-center">
                <tr>
                   <th class="border px-2 py-1">No</th>
@@ -83,14 +83,20 @@
                   <th class="border px-2 py-1">Tanggal Laporan</th>
                   <th class="border px-2 py-1">Tanggal Kejadian</th>
                   <th class="border px-2 py-1">Kode Penyidik</th>
-                  <th class="border px-2 py-1">Nama Korban</th>
                   <th class="border px-2 py-1">Nama Tersangka</th>
+                  <th class="border px-2 py-1">Jenis Kendaraan Tersangka</th>
+                  <th class="border px-2 py-1">Nomor Polisi Tersangka</th>
+                  <th class="border px-2 py-1">Masa Berlaku SW Tersangka</th>
+                  <th class="border px-2 py-1">Foto Barang Bukti Tersangka</th>
+                  <th class="border px-2 py-1">Status Kendaraan Tersangka</th>
+                  <th class="border px-2 py-1">Nama Korban</th>
                   <th class="border px-2 py-1">Jenis Kendaraan</th>
                   <th class="border px-2 py-1">Nomor Polisi</th>
-                  <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
+                  <th class="border px-2 py-1">Masa Berlaku SW</th>
                   <th class="border px-2 py-1">Total Kerugian</th>
                   <th class="border px-2 py-1">Foto Barang Bukti</th>
                   <th class="border px-2 py-1">Keterangan</th>
+                  <th class="border px-2 py-1">Status Kendaraan Korban</th>
                   <th class="border px-2 py-1">Status Perkara</th>
                </tr>
             </thead>
@@ -111,19 +117,60 @@
                            <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
                            <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
                            <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->kode_penyidik }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->nama_tersangka }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->jenis_kendaraan_tersangka }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->nomor_polisi_tersangka }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->masa_berlaku_pkb_sw_tersangka }}</td>
+                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">
+                              @if ($item->foto_barang_bukti_tersangka)
+                                 <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer mx-auto"
+                                    onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                              @else
+                                 <span class="italic text-red-500">Tidak ada</span>
+                              @endif
+                           </td>
+                           <td class="border px-2 py-1 text-center" rowspan="{{ $rowspan }}">
+                              <form action="{{ route('data-kendaraan.update-status-kendaraan-tersangka', $item->id) }}" method="POST">
+                                 @csrf
+                                 @method('PUT')
+                                 <select name="status_kendaraan_tersangka" onchange="this.form.submit()"
+                                    class="text-sm font-semibold rounded px-2 py-1
+                                    {{ $item->status_kendaraan_tersangka == 'Sudah Dikembalikan' ? 'text-green-600' : 'text-red-600' }}
+                                    bg-transparent border-none focus:outline-none">
+                                    <option class="text-red-600" value="Belum Dikembalikan" {{ $item->status_kendaraan_tersangka == 'Belum Dikembalikan' ? 'selected' : '' }}>Belum Dikembalikan</option>
+                                    <option class="text-green-600" value="Sudah Dikembalikan" {{ $item->status_kendaraan_tersangka == 'Sudah Dikembalikan' ? 'selected' : '' }}>Sudah Dikembalikan</option>
+                                 </select>
+                              </form>
+                           </td>
                         @endif
 
                         <td class="border px-2 py-1">{{ $item->nama_korban }}</td>
-                        <td class="border px-2 py-1">{{ $item->nama_tersangka }}</td>
                         <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
                         <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
-                        <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_pkb_sw)->format('d/m/Y') }}</td>
+                        <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                         <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->total_kerugian, 0, ',', '.') }}</td>
-                        <td class="border px-2 py-1 flex justify-center">
-                           <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                              onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                        <td class="border px-2 py-1 text-center">
+                           @if ($item->foto_barang_bukti)
+                              <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer mx-auto"
+                                 onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                           @else
+                              <span class="italic text-red-500">Tidak ada</span>
+                           @endif
                         </td>
                         <td class="border px-2 py-1">{{ $item->keterangan }}</td>
+                        <td class="border px-2 py-1 text-center">
+                           <form action="{{ route('data-kendaraan.update-status-kendaraan-korban', $item->id) }}" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <select name="status_kendaraan_korban" onchange="this.form.submit()"
+                                 class="text-sm font-semibold rounded px-2 py-1
+                                 {{ $item->status_kendaraan_korban == 'Sudah Dikembalikan' ? 'text-green-600' : 'text-red-600' }}
+                                 bg-transparent border-none focus:outline-none">
+                                 <option class="text-red-600" value="Belum Dikembalikan" {{ $item->status_kendaraan_korban == 'Belum Dikembalikan' ? 'selected' : '' }}>Belum Dikembalikan</option>
+                                 <option class="text-green-600" value="Sudah Dikembalikan" {{ $item->status_kendaraan_korban == 'Sudah Dikembalikan' ? 'selected' : '' }}>Sudah Dikembalikan</option>
+                              </select>
+                           </form>
+                        </td>
 
                         {{-- Status Perkara hanya ditampilkan di baris pertama tiap grup --}}
                         @if ($index == 0)

@@ -49,6 +49,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/jr/statistik-laporan/unduh', [AdminStatistikLaporanController::class, 'unduhPdf'])->name('jr.statistik-laporan.unduh');
     Route::get('/jr/data-laporan', [AdminDataLaporanController::class, 'index'])->name('jr.data-laporan.index');
     Route::put('/jr/data-laporan/{id}/update-status', [AdminDataLaporanController::class, 'updateStatus'])->name('jr.updateStatus');
+    Route::put('/jr/data-laporan/{id}/update-status-tersangka', [AdminDataLaporanController::class, 'updateStatusTersangka'])->name('jr.updateStatusTersangka');
     Route::get('jr/data-laporan/unduh', [AdminDataLaporanController::class, 'unduhLaporan'])->name('jr.laporan.download');
     Route::get('/jr/data-hasil-survei', fn () => view('jasa-raharja.pages.data-hasil-survei.index'));
     Route::get('/jr/data-hasil-survei', [AdminDataHasilSurveiController::class, 'index'])->name('jr.data-hasil-survei.index');
@@ -65,7 +66,9 @@ Route::middleware(['auth', 'role:surveyor'])->group(function () {
     Route::put('surveyor/data-survei/updateCatatan/{id}', [SDataWajibSurveiController::class, 'updateCatatan'])->name('surveyor.updateCatatan');
     Route::get('/surveyor/data-survei/unduh', [SDataWajibSurveiController::class, 'unduhLaporan'])->name('surveyor.data-survei.download');
     Route::get('/surveyor/data-survei/input-hasil-survei/{id}', [SDataWajibSurveiController::class, 'input'])->name('surveyor.data-survei.input');
+    Route::get('/surveyor/data-survei/input-hasil-survei/tersangka/{id}', [SDataWajibSurveiController::class, 'inputTersangka'])->name('surveyor.data-survei.input.tersangka');
     Route::post('/surveyor/data-survei/input-hasil-survei/store', [SDataWajibSurveiController::class, 'store'])->name('surveyor.hasil-survei.store');
+    Route::post('/surveyor/data-survei/input-hasil-survei/storeTersangka', [SDataWajibSurveiController::class, 'storeTersangka'])->name('surveyor.hasil-survei.store.tersangka');
 
     Route::get('/surveyor/data-hasil-survei', [SDataHasilSurveiController::class, 'index'])->name('surveyor.data-hasil-survei.index');
     Route::get('/surveyor/data-hasil-survei/unduh', [SDataHasilSurveiController::class, 'unduhLaporan'])->name('surveyor.data-hasil-survei.download');
@@ -82,6 +85,8 @@ Route::middleware(['auth', 'role:unit laka'])->group(function () {
     Route::get('/unit-laka/data-kendaraan', [ULSDataKendaraanController::class, 'index'])->name('data-kendaraan.index');
     Route::get('/unit-laka/data-kendaraan/unduh', [ULSDataKendaraanController::class, 'unduh'])->name('data-kendaraan.unduh');
     Route::put('/unit-laka/data-kendaraan/status-perkara/{id}', [ULSDataKendaraanController::class, 'updateStatus'])->name('data-kendaraan-status.update');
+    Route::put('/data-kendaraan/update-status-kendaraan-tersangka/{id}', [ULSDataKendaraanController::class, 'updateStatusKendaraanTersangka'])->name('data-kendaraan.update-status-kendaraan-tersangka');
+    Route::put('/data-kendaraan/update-status-kendaraan-korban/{id}', [ULSDataKendaraanController::class, 'updateStatusKendaraanKorban'])->name('data-kendaraan.update-status-kendaraan-korban');
     Route::get('/unit-laka/input-data-kendaraan', fn () => view('unit-laka-samsat-jakut.pages.input-data-kendaraan.index'));
     Route::post('/unit-laka/input-data-kendaraan/store', [ULSDataKendaraanController::class, 'store'])->name('data-kendaraan.store');
 });

@@ -81,20 +81,27 @@
 
          <!-- Table -->
          <div class="overflow-x-auto w-full">
-            <table class="min-w-[1600px] border text-sm text-left">
+            <table class="min-w-[2500px] border text-sm text-left">
                <thead class="bg-[#373D53] text-white text-center">
                      <tr>
                         <th class="border px-2 py-1">No</th>
                         <th class="border px-2 py-1">Laporan Polisi</th>
                         <th class="border px-2 py-1">Tanggal Laporan</th>
                         <th class="border px-2 py-1">Tanggal Kejadian</th>
-                        <th class="border px-2 py-1">Jenis Kendaraan</th>
-                        <th class="border px-2 py-1">Nomor Polisi</th>
-                        <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
-                        <th class="border px-2 py-1">Estimasi Tunggakan</th>
-                        <th class="border px-2 py-1">Foto Barang Bukti</th>
-                        <th class="border px-2 py-1">Status Survei</th>
-                        <th class="border px-2 py-1">Input Hasil Survei</th>
+                        <th class="border px-2 py-1">Jenis Kendaraan Tersangka</th>
+                        <th class="border px-2 py-1">Nomor Polisi Tersangka</th>
+                        <th class="border px-2 py-1">Masa Berlaku SW Tersangka</th>
+                        <th class="border px-2 py-1">Estimasi Tunggakan Tersangka</th>
+                        <th class="border px-2 py-1">Foto Barang Bukti Tersangka</th>
+                        <th class="border px-2 py-1">Status Survei Tersangka</th>
+                        <th class="border px-2 py-1">Input Hasil Survei Tersangka</th>
+                        <th class="border px-2 py-1">Jenis Kendaraan Korban</th>
+                        <th class="border px-2 py-1">Nomor Polisi Korban</th>
+                        <th class="border px-2 py-1">Masa Berlaku SW Korban</th>
+                        <th class="border px-2 py-1">Estimasi Tunggakan Korban</th>
+                        <th class="border px-2 py-1">Foto Barang Bukti Korban</th>
+                        <th class="border px-2 py-1">Status Survei Korban</th>
+                        <th class="border px-2 py-1">Input Hasil Survei Korban</th>
                         <th class="border px-2 py-1">Status Perkara</th>
                      </tr>
                </thead>
@@ -116,18 +123,45 @@
                                 <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
                                 <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
                                 <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->jenis_kendaraan_tersangka }}</td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->nomor_polisi_tersangka }}</td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->masa_berlaku_pkb_sw_tersangka }}</td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">Rp {{ number_format($item->estimasi_tunggakan_tersangka, 0, ',', '.') }}</td>
+                                <td class="border" rowspan="{{ $rowspan }}">
+                                    <div class="flex justify-center px-2 py-1">
+                                        <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                        onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                                    </div>
+                                </td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    @if($item->status_survei_tersangka === 'Selesai Survei')
+                                        <span class="text-green-600 font-semibold">{{ $item->status_survei_tersangka }}</span>
+                                        @else
+                                        <span class="text-red-600 font-semibold">{{ $item->status_survei_tersangka }}</span>
+                                    @endif
+                                </td>
+                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                    @if ($item->catatan_hasil_survei_tersangka)
+                                        <button class="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Sudah Survei</button>
+                                    @else
+                                        <a href="{{ route('surveyor.data-survei.input.tersangka', ['id' => $item->id]) }}"
+                                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                                            Input
+                                        </a>
+                                    @endif
+                                </td>
                             @endif
 
                             {{-- Data kendaraan ditampilkan di setiap baris --}}
-                            <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
-                            <td class="border px-2 py-1">{{ $item->nomor_polisi }}</td>
-                            <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap">{{ $item->jenis_kendaraan }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                             <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
                             <td class="border px-2 py-1 flex justify-center">
                                 <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
                                     onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
                             </td>
-                            <td class="border px-2 py-1">
+                            <td class="border px-2 py-1 whitespace-nowrap">
                                 @if($item->status_survei === 'Selesai Survei')
                                     <span class="text-green-600 font-semibold">{{ $item->status_survei }}</span>
                                 @else
@@ -140,7 +174,7 @@
                                 @if ($item->catatan_hasil_survei)
                                     <button class="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Sudah Survei</button>
                                 @else
-                                    <a href="{{ route('surveyor.data-survei.input', ['id' => $item->id]) }}"
+                                    <a href="{{ route('surveyor.data-survei.input.tersangka', ['id' => $item->id]) }}"
                                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
                                         Input
                                     </a>
@@ -217,7 +251,6 @@
          <!-- Pagination -->
          <div class="flex flex-col justify-center items-center mt-4">
             <div class="mb-4">
-               <!-- Tombol Previous -->
                @if ($dataLaporan->onFirstPage())
                      <button class="px-3 py-1 border rounded bg-gray-200 mr-1" disabled>Previous</button>
                @else
@@ -226,7 +259,6 @@
                      </a>
                @endif
 
-               <!-- Pagination Links -->
                @foreach ($dataLaporan->getUrlRange(1, $dataLaporan->lastPage()) as $page => $url)
                      <a href="{{ $url }}">
                         <button class="px-3 py-1 border rounded {{ $page == $dataLaporan->currentPage() ? 'bg-blueJR text-white' : 'bg-white' }}">
@@ -235,7 +267,6 @@
                      </a>
                @endforeach
 
-               <!-- Tombol Next -->
                @if ($dataLaporan->hasMorePages())
                      <a href="{{ $dataLaporan->nextPageUrl() }}">
                         <button class="px-3 py-1 border rounded bg-gray-200 ml-1">Next</button>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
   
-        <title>Unit Laka Lantas SAMSAT | PADUKA</title>
+        <title>Unit Laka Lantas | PADUKA</title>
         <link rel="icon" href="{{ asset('img/jasa-raharja/logo/logo-paduka.png') }}">
 
         {{-- CDN --}}

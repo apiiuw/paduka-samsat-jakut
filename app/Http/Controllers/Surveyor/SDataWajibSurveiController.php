@@ -301,6 +301,13 @@ class SDataWajibSurveiController extends Controller
         return view('surveyor.pages.data-survei.input-hasil-survei.index', compact('data'));
     }
 
+    public function inputTersangka($id)
+    {
+        $data = AdminJrDataLaporan::findOrFail($id); // cari data berdasarkan ID, error kalau tidak ditemukan
+
+        return view('surveyor.pages.data-survei.input-hasil-survei.tersangka', compact('data'));
+    }
+
     public function store(Request $request)
     {
         // Validasi input
@@ -335,7 +342,7 @@ class SDataWajibSurveiController extends Controller
             'pertanyaan_2' => $validated['pertanyaan_2'],
             'pertanyaan_3' => $validated['pertanyaan_3'] ?? null,
             'foto_pemilik_kbm' => $fotoPath,
-            'nama_file_pdf' => '', // diisi nanti
+            'nama_file_pdf' => '', 
         ]);
 
         // Generate PDF dari data hasil survei
@@ -360,6 +367,70 @@ class SDataWajibSurveiController extends Controller
         $laporan = AdminJrDataLaporan::find($validated['laporan_id']);
         $laporan->catatan_hasil_survei = "data/hasil-survei/{$pdfName}"; // Simpan lokasi file PDF
         $laporan->status_survei = "Selesai Survei"; 
+        $laporan->save();
+
+        return redirect()->route('surveyor.data-survei.index')->with('success', 'Data berhasil disimpan dan file PDF tercatat.');
+    }
+
+    public function storeTersangka(Request $request)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'laporan_id' => 'required|exists:admin_jr_data_laporan,id',
+            'nama_surveyor' => 'required|string',
+            'loket_surveyor' => 'required|string',
+            'nama_pemilik_kbm' => 'required|string',
+            'nopol_kbm' => 'required|string',
+            'jenis_kbm' => 'required|string',
+            'pertanyaan_1' => 'required|string',
+            'pertanyaan_2' => 'required|string',
+            'pertanyaan_3' => 'nullable|string',
+            'foto_pemilik_kbm' => 'nullable|image|max:2048',
+        ]);
+
+        // Simpan foto jika ada
+        $fotoPath = null;
+        if ($request->hasFile('foto_pemilik_kbm')) {
+            $fotoPath = $request->file('foto_pemilik_kbm')->store('foto-kbm', 'public');
+        }
+
+        // Simpan data hasil survei ke tabel surveyor_hasil_survei
+        $hasilSurvei = SurveyorHasilSurvei::create([
+            'laporan_id' => $validated['laporan_id'],
+            'nama_surveyor' => $validated['nama_surveyor'],
+            'loket_surveyor' => $validated['loket_surveyor'],
+            'nama_pemilik_kbm' => $validated['nama_pemilik_kbm'],
+            'nopol_kbm' => $validated['nopol_kbm'],
+            'jenis_kbm' => $validated['jenis_kbm'],
+            'pertanyaan_1' => $validated['pertanyaan_1'],
+            'pertanyaan_2' => $validated['pertanyaan_2'],
+            'pertanyaan_3' => $validated['pertanyaan_3'] ?? null,
+            'foto_pemilik_kbm' => $fotoPath,
+            'nama_file_pdf' => '', 
+        ]);
+
+        // Generate PDF dari data hasil survei
+        $pdf = PDF::loadView('surveyor.pages.data-survei.input-hasil-survei.pdf', ['data' => $hasilSurvei]);
+        $pdfName = $hasilSurvei->id . '.pdf'; // Nama file berdasarkan ID hasil survei
+        $pdfPath = public_path("data/hasil-survei/{$pdfName}");
+
+        // Membuat folder jika belum ada
+        if (!file_exists(public_path('data/hasil-survei'))) {
+            mkdir(public_path('data/hasil-survei'), 0775, true);
+        }
+
+        // Simpan PDF ke disk
+        $pdf->save($pdfPath);
+
+        // Update lokasi file PDF di tabel surveyor_hasil_survei
+        $hasilSurvei->update([
+            'nama_file_pdf' => $pdfName,
+        ]);
+
+        // Update kolom catatan_hasil_survei di tabel AdminJrDataLaporan dengan lokasi file PDF
+        $laporan = AdminJrDataLaporan::find($validated['laporan_id']);
+        $laporan->catatan_hasil_survei_tersangka = "data/hasil-survei/{$pdfName}"; // Simpan lokasi file PDF
+        $laporan->status_survei_tersangka = "Selesai Survei"; 
         $laporan->save();
 
         return redirect()->route('surveyor.data-survei.index')->with('success', 'Data berhasil disimpan dan file PDF tercatat.');
