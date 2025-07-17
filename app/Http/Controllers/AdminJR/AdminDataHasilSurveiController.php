@@ -146,7 +146,10 @@ class AdminDataHasilSurveiController extends Controller
         $dataLaporan = AdminJrDataLaporan::query();
 
         // Filter berdasarkan status_survei "Selesai Survei"
-        $dataLaporan = $dataLaporan->where('status_survei', 'Selesai Survei');
+        $dataLaporan = $dataLaporan->where(function ($query) {
+            $query->where('status_survei', 'Selesai Survei')
+                ->orWhere('status_survei_tersangka', 'Selesai Survei');
+        });
 
         // Jika ada pencarian, filter berdasarkan laporan_polisi atau nomor_polisi
         if ($search) {
