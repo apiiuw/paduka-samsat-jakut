@@ -7,7 +7,7 @@
       <div class="bg-white p-4 rounded-xl shadow-md">
          <p class="font-semibold text-lg text-[#373A3C]">Filter Data Laporan</p>
          <hr class="bg-[#E8EEF2] h-[2px] mt-4 mb-8">
-         <form action="{{ route('surveyor.data-hasil-survei.index') }}" method="GET" class="flex justify-between flex-wrap gap-2">
+         <form action="{{ route('jr.data-hasil-survei.index') }}" method="GET" class="flex justify-between flex-wrap gap-2">
             <!-- Tahun -->
             <div class="flex items-center gap-2">
                   <span class="text-sm text-gray-600">Tahun</span>
@@ -70,7 +70,7 @@
 
          <div class="flex items-center gap-2 mb-4 text-sm">
             <!-- Form Pencarian -->
-            <form action="{{ route('surveyor.data-hasil-survei.index') }}" method="GET" class="flex w-full">
+            <form action="{{ route('jr.data-hasil-survei.index') }}" method="GET" class="flex w-full">
                <!-- Input Pencarian -->
                <input type="text" name="search" placeholder="Ketikkan Laporan Polisi atau Nomor Polisi" value="{{ request('search') }}" class="flex-grow border text-sm rounded px-4 py-2 mr-2" />
                
