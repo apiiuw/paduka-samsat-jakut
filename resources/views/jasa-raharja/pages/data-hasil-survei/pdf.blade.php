@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Data Kendaraan</title>
+    <title>Laporan Data Hasil Survei</title>
     <style>
         @page {
             size: A4 landscape;
