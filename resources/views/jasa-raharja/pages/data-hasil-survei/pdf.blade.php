@@ -84,7 +84,7 @@
     </style>
 </head>
 <body>
-    <h2>Laporan Data Kendaraan</h2>
+    <h2>Laporan Data Hasil Survei</h2>
 
     <div class="container">
         <table>
