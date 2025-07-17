@@ -156,9 +156,9 @@
                                     </td>
                                  @endif
 
-                                 <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
-                                 <td class="border px-2 py-1">{{ $item->nomor_polisi }}</td>
-                                 <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
+                                 <td class="border px-2 py-1 whitespace-nowrap">{{ $item->jenis_kendaraan }}</td>
+                                 <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
+                                 <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                                  <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
                                  <td class="border px-2 py-1 flex justify-center">
                                     <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
@@ -168,7 +168,7 @@
                                  <form action="{{ route('jr.updateStatus', $item->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <td class="border px-2 py-1">
+                                    <td class="border px-2 py-1 whitespace-nowrap">
                                        <select name="status_validasi" class="form-control" onchange="this.form.submit()">
                                              <!-- Default option (empty) to prompt the user to select if they haven't already -->
                                              <option value="" disabled {{ !$item->status_validasi ? 'selected' : '' }}>Pilih Status</option>
@@ -191,7 +191,7 @@
 
                                  {{-- Status Perkara hanya ditampilkan pada baris pertama untuk setiap grup --}}
                                  @if ($index == 0)
-                                    <td class="border px-2 py-1 text-center" rowspan="{{ $rowspan }}">
+                                    <td class="border px-2 py-1 text-center whitespace-nowrap" rowspan="{{ $rowspan }}">
                                        <!-- Menampilkan Status Perkara sebagai Teks -->
                                        <span class="font-semibold {{ $item->status_perkara == 'Selesai' ? 'text-green-600' : 'text-red-600' }}">
                                              {{ $item->status_perkara }}
