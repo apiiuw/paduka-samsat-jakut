@@ -50,8 +50,11 @@ class FormPenghapusanKendaraanController extends Controller
         // Mencetak PDF setelah data disimpan
         $pdf = PDF::loadView('user.pages.pdf', ['data' => $data]);
 
+        // Tentukan nama file PDF sesuai format yang diminta
+        $pdfFileName = $data->id . '_' . $data->nama_pemilik . '_' . $data->nik_tdp_nib_kitas_kitab . '.pdf';
+
         // Tentukan path file PDF
-        $pdfPath = 'pengajuan-penghapusan/Form Pengajuan Penghapusan Data Kendaraan (' . $data->nrkb_kendaraan . ').pdf';
+        $pdfPath = 'pengajuan-penghapusan/' . $pdfFileName;
 
         // Tentukan direktori penyimpanan
         $storagePath = storage_path('app/public/' . $pdfPath);
@@ -71,6 +74,7 @@ class FormPenghapusanKendaraanController extends Controller
         // Mengunduh file PDF secara langsung
         return response()->download($storagePath);
     }
+
 
 
 
