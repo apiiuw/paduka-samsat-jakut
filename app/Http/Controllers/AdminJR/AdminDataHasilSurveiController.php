@@ -24,7 +24,10 @@ class AdminDataHasilSurveiController extends Controller
         $dataLaporan = AdminJrDataLaporan::query();
 
         // Filter berdasarkan status_survei "Selesai Survei"
-        $dataLaporan = $dataLaporan->where('status_survei', 'Selesai Survei');
+        $dataLaporan = $dataLaporan->where(function ($query) {
+            $query->where('status_survei', 'Selesai Survei')
+                ->orWhere('status_survei_tersangka', 'Selesai Survei');
+        });
 
         // Jika ada pencarian, filter berdasarkan laporan_polisi atau nomor_polisi
         if ($search) {
@@ -75,9 +78,6 @@ class AdminDataHasilSurveiController extends Controller
             $dataLaporan = $dataLaporan->where('status_perkara', $status_perkara);
         }
 
-        // Menghapus filter status_validasi berdasarkan surveyor
-        // Tidak menambahkan kondisi filter berdasarkan email login
-
         // Paginasi 10 data per halaman
         $dataLaporan = $dataLaporan->paginate(10);
 
@@ -88,6 +88,7 @@ class AdminDataHasilSurveiController extends Controller
         foreach ($dataLaporan as $laporan) {
             // Menghitung selisih tahun antara tahun sekarang dan masa berlaku PKB/SW
             $yearsDifference = $currentYear - \Carbon\Carbon::parse($laporan->masa_berlaku_pkb_sw)->year;
+            $yearsDifferenceTersangka = $currentYear - \Carbon\Carbon::parse($laporan->masa_berlaku_pkb_sw_tersangka)->year;
 
             // Tentukan nominal berdasarkan jenis kendaraan
             switch ($laporan->jenis_kendaraan) {
@@ -103,12 +104,27 @@ class AdminDataHasilSurveiController extends Controller
                     break;
             }
 
+            switch ($laporan->jenis_kendaraan_tersangka) {
+                case 'Roda 2':
+                case 'Roda 3':
+                    $nominalTersangka = 35000;
+                    break;
+                case 'Roda 4':
+                    $nominalTersangka = 143000;
+                    break;
+                default:
+                    $nominalTersangka = 163000;  // Untuk kendaraan roda di atas 4
+                    break;
+            }
+
             // Hitung estimasi tunggakan
             $estimasiTunggakan = $yearsDifference * $nominal;
+            $estimasiTunggakanTersangka = $yearsDifferenceTersangka * $nominalTersangka;
 
             // Simpan estimasi tunggakan ke database
             $laporan->estimasi_tunggakan = $estimasiTunggakan;
-            $laporan->save(); // Menyimpan perubahan ke database
+            $laporan->estimasi_tunggakan_tersangka = $estimasiTunggakanTersangka;
+            $laporan->save(); 
         }
 
         // Kirim data ke view
