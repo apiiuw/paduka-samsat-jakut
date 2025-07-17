@@ -61,12 +61,18 @@
                 <th class="border px-2 py-1">Laporan Polisi</th>
                 <th class="border px-2 py-1">Tanggal Laporan</th>
                 <th class="border px-2 py-1">Tanggal Kejadian</th>
-                <th class="border px-2 py-1">Jenis Kendaraan</th>
-                <th class="border px-2 py-1">Nomor Polisi</th>
-                <th class="border px-2 py-1">Masa Berlaku PKB/SW</th>
-                <th class="border px-2 py-1">Estimasi Tunggakan SW</th>
-                <th class="border px-2 py-1">Foto Barang Bukti</th>
-                <th class="border px-2 py-1">Status Validasi</th>
+                <th class="border px-2 py-1">Jenis Kendaraan Tersangka</th>
+                <th class="border px-2 py-1">Nomor Polisi Tersangka</th>
+                <th class="border px-2 py-1">Masa Berlaku SW Tersangka</th>
+                <th class="border px-2 py-1">Estimasi Tunggakan SW Tersangka</th>
+                <th class="border px-2 py-1">Foto Barang Bukti Tersangka</th>
+                <th class="border px-2 py-1">Status Validasi Tersangka</th>
+                <th class="border px-2 py-1">Jenis Kendaraan Korban</th>
+                <th class="border px-2 py-1">Nomor Polisi Korban</th>
+                <th class="border px-2 py-1">Masa Berlaku SW Korban</th>
+                <th class="border px-2 py-1">Estimasi Tunggakan SW Korban</th>
+                <th class="border px-2 py-1">Foto Barang Bukti Korban</th>
+                <th class="border px-2 py-1">Status Validasi Korban</th>
                 <th class="border px-2 py-1">Status Perkara</th>
             </tr>
         </thead>
@@ -88,6 +94,14 @@
                             <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
                             <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
                             <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->jenis_kendaraan_tersangka }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->nomor_polisi_tersangka }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw_tersangka)->format('d/m/Y') }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">Rp {{ number_format($item->estimasi_tunggakan_tersangka, 0, ',', '.') }}</td>
+                            <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                <img src="{{ public_path($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer" />
+                            </td>
+                            <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->status_validasi_tersangka }}</td>
                         @endif
 
                         {{-- Data kendaraan ditampilkan di setiap baris --}}

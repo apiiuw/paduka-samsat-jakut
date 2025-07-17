@@ -230,7 +230,7 @@
                      <button class="px-3 py-1 border rounded bg-gray-200 ml-1" disabled>Next</button>
                @endif
             </div>
-            <button onclick="window.location='{{ route('surveyor.data-hasil-survei.download', request()->query()) }}'" class="bg-blueJR text-white px-6 py-2 rounded">Unduh Data</button>
+            <button onclick="window.location='{{ route('jr.hasil-survei.download', request()->query()) }}'" class="bg-blueJR text-white px-6 py-2 rounded">Unduh Data</button>
          </div>
       </div>
 

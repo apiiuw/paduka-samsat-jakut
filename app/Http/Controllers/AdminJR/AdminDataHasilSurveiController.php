@@ -20,6 +20,23 @@ class AdminDataHasilSurveiController extends Controller
         $jenis_kendaraan = $request->input('jenis_kendaraan');
         $status_perkara = $request->input('status_perkara');
 
+        // Dapatkan email user yang sedang login
+        $userEmail = auth()->user()->email;
+
+        // Tentukan status_validasi berdasarkan email yang sedang login
+        $statusValidasi = '';
+        if ($userEmail === 'surveyorjakartapusat@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Pusat';
+        } elseif ($userEmail === 'surveyorjakartautara@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Utara';
+        } elseif ($userEmail === 'surveyorjakartatimur@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Timur';
+        } elseif ($userEmail === 'surveyorjakartabarat@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Barat';
+        } elseif ($userEmail === 'surveyorjakartaselatan@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Selatan';
+        }
+
         // Ambil data laporan dengan pencarian dan filter
         $dataLaporan = AdminJrDataLaporan::query();
 
@@ -75,8 +92,10 @@ class AdminDataHasilSurveiController extends Controller
             $dataLaporan = $dataLaporan->where('status_perkara', $status_perkara);
         }
 
-        // Menghapus filter status_validasi berdasarkan surveyor
-        // Tidak menambahkan kondisi filter berdasarkan email login
+        // Menambahkan filter berdasarkan status_validasi sesuai dengan surveyor yang sedang login
+        if ($statusValidasi) {
+            $dataLaporan = $dataLaporan->where('status_validasi', $statusValidasi);
+        }
 
         // Paginasi 10 data per halaman
         $dataLaporan = $dataLaporan->paginate(10);
@@ -125,6 +144,23 @@ class AdminDataHasilSurveiController extends Controller
         $bulan = $request->input('bulan');
         $jenis_kendaraan = $request->input('jenis_kendaraan');
         $status_perkara = $request->input('status_perkara');
+
+        // Dapatkan email user yang sedang login
+        $userEmail = auth()->user()->email;
+
+        // Tentukan status_validasi berdasarkan email yang sedang login
+        $statusValidasi = '';
+        if ($userEmail === 'surveyorjakartapusat@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Pusat';
+        } elseif ($userEmail === 'surveyorjakartautara@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Utara';
+        } elseif ($userEmail === 'surveyorjakartatimur@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Timur';
+        } elseif ($userEmail === 'surveyorjakartabarat@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Barat';
+        } elseif ($userEmail === 'surveyorjakartaselatan@jrpaduka.com') {
+            $statusValidasi = 'Jakarta Selatan';
+        }
 
         // Ambil data laporan dengan pencarian dan filter yang sesuai
         $dataLaporan = AdminJrDataLaporan::query();
@@ -178,6 +214,11 @@ class AdminDataHasilSurveiController extends Controller
             $dataLaporan = $dataLaporan->where('status_perkara', $status_perkara);
         }
 
+        // Menambahkan filter berdasarkan status_validasi sesuai dengan surveyor yang sedang login
+        if ($statusValidasi) {
+            $dataLaporan = $dataLaporan->where('status_validasi', $statusValidasi);
+        }
+
         // Ambil data laporan yang sudah difilter (tanpa pagination karena akan diunduh dalam PDF)
         $dataLaporan = $dataLaporan->get();
 
@@ -217,6 +258,4 @@ class AdminDataHasilSurveiController extends Controller
         // Unduh PDF
         return $pdf->download('laporan_data_kendaraan.pdf');
     }
-
-
 }
