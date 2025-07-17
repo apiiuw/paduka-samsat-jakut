@@ -144,10 +144,10 @@
                            </td>
                         @endif
 
-                        <td class="border px-2 py-1">{{ $item->nama_korban }}</td>
-                        <td class="border px-2 py-1">{{ $item->jenis_kendaraan }}</td>
+                        <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nama_korban }}</td>
+                        <td class="border px-2 py-1 whitespace-nowrap">{{ $item->jenis_kendaraan }}</td>
                         <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
-                        <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
+                        <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                         <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->total_kerugian, 0, ',', '.') }}</td>
                         <td class="border px-2 py-1 text-center">
                            @if ($item->foto_barang_bukti)
@@ -157,8 +157,8 @@
                               <span class="italic text-red-500">Tidak ada</span>
                            @endif
                         </td>
-                        <td class="border px-2 py-1">{{ $item->keterangan }}</td>
-                        <td class="border px-2 py-1 text-center">
+                        <td class="border px-2 py-1 whitespace-nowrap">{{ $item->keterangan }}</td>
+                        <td class="border px-2 py-1 text-center whitespace-nowrap">
                            <form action="{{ route('data-kendaraan.update-status-kendaraan-korban', $item->id) }}" method="POST">
                               @csrf
                               @method('PUT')
