@@ -7,7 +7,7 @@
    <div class="h-full px-3 pb-4 pt-5 overflow-y-auto bg-[#373D53]">
       <div class="flex flex-col text-left text-[#ADB7C1] border-b border-[#ADB7C1] pb-3 mb-3">
          <h1 class="text-md font-semibold">DASHBOARD</h1>
-         <h3 class="text-xs">Unit Laka Lantas SAMSAT Jakarta Utara</h3>
+         <h3 class="text-xs">Unit Laka Lantas POLRES Jakarta Utara</h3>
       </div>
       <ul class="space-y-2 font-medium">
          <li>

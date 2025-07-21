@@ -129,8 +129,12 @@
                                 <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">Rp {{ number_format($item->estimasi_tunggakan_tersangka, 0, ',', '.') }}</td>
                                 <td class="border" rowspan="{{ $rowspan }}">
                                     <div class="flex justify-center px-2 py-1">
-                                        <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                                        onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                                        @if($item->foto_barang_bukti_tersangka)
+                                            <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                                onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                                        @else
+                                            <p class="italic text-red-500">Tidak ada</p>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
@@ -140,7 +144,7 @@
                                         <span class="text-red-600 font-semibold">{{ $item->status_survei_tersangka }}</span>
                                     @endif
                                 </td>
-                                <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">
+                                <td class="border px-2 py-3 whitespace-nowrap" rowspan="{{ $rowspan }}">
                                     @if ($item->catatan_hasil_survei_tersangka)
                                         <button class="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Sudah Survei</button>
                                     @else
@@ -157,9 +161,15 @@
                             <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
                             <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                             <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
-                            <td class="border px-2 py-1 flex justify-center">
-                                <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                                    onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                            <td class="border px-2 py-1">
+                                <div class="flex justify-center px-2 py-1">
+                                    @if($item->foto_barang_bukti)
+                                        <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                            onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                                    @else
+                                        <p class="italic text-red-500">Tidak ada</p>
+                                    @endif
+                                </div>
                             </td>
                             <td class="border px-2 py-1 whitespace-nowrap">
                                 @if($item->status_survei === 'Selesai Survei')
@@ -170,7 +180,7 @@
                             </td>
 
                             {{-- Tombol untuk menambahkan catatan hasil survei --}}
-                            <td class="border px-2 py-1 whitespace-nowrap">
+                            <td class="border px-2 py-3 whitespace-nowrap">
                                 @if ($item->catatan_hasil_survei)
                                     <button class="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Sudah Survei</button>
                                 @else

@@ -14,22 +14,31 @@
 
                 <!-- Form Data Laporan -->
                 <div>
-                    <label class="block text-sm font-medium">Laporan Polisi</label>
-                    <input name="laporan_polisi" type="text" placeholder="Ketikkan Laporan Polisi..." class="placeholder:text-gray-500 placeholder:normal-case uppercase mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
+                    <label class="block text-sm font-medium">
+                        Laporan Polisi <span class="text-red-500">*</span>
+                    </label>
+                    <input name="laporan_polisi" type="text" placeholder="Ketikkan Laporan Polisi..." class="placeholder:text-gray-500 placeholder:normal-case uppercase mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500" required>
                 </div>
 
+
                 <div>
-                    <label class="block text-sm font-medium">Tanggal Laporan</label>
+                    <label class="block text-sm font-medium">
+                        Tanggal Laporan <span class="text-red-500">*</span>
+                    </label>
                     <input name="tanggal_laporan" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Tanggal Kejadian</label>
+                    <label class="block text-sm font-medium">
+                        Tanggal Kejadian <span class="text-red-500">*</span>
+                    </label>
                     <input name="tanggal_kejadian" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Kode Penyidik</label>
+                    <label class="block text-sm font-medium">
+                        Kode Penyidik <span class="text-red-500">*</span>
+                    </label>
                     <select name="kode_penyidik" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                         <option value="">Pilih Kode Penyidik</option>
                         <option value="T.1">T.1</option>
@@ -39,7 +48,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Status Perkara</label>
+                    <label class="block text-sm font-medium">
+                        Status Perkara <span class="text-red-500">*</span>
+                    </label>
                     <select name="status_perkara" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                         <option value="">Pilih Status Perkara</option>
                         <option value="Selesai">Selesai</option>
@@ -48,14 +59,18 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Nama Tersangka</label>
+                    <label class="block text-sm font-medium">
+                        Nama Tersangka <span class="text-yellow-600">(Opsional)</span>
+                    </label>
                     <input name="nama_tersangka_global" type="text"
                         placeholder="Ketikkan Nama Tersangka..."
                         class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                 </div>
 
                 <div class="mt-4">
-                    <label class="block text-sm font-medium">Jenis Kendaraan Tersangka</label>
+                    <label class="block text-sm font-medium">
+                        Jenis Kendaraan Tersangka <span class="text-yellow-600">(Opsional)</span>
+                    </label>
                     <select name="jenis_kendaraan_tersangka" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                         <option value="">Pilih Jenis Kendaraan</option>
                         <option value="Roda 2">Roda 2</option>
@@ -66,7 +81,9 @@
                 </div>
 
                 <div x-data="nopolHandler()" class="space-y-1">
-                    <label class="block text-sm font-medium">Nomor Polisi Tersangka</label>
+                    <label class="block text-sm font-medium">
+                        Nomor Polisi Tersangka <span class="text-yellow-600">(Opsional)</span>
+                    </label>
 
                     <div x-show="!tanpaNopol">
                         <div class="flex items-center space-x-1">
@@ -88,12 +105,16 @@
                 </div>
 
                 <div x-data="masaBerlakuHandler()" class="mt-4">
-                    <label class="block text-sm font-medium">Masa Berlaku PKB/SW Tersangka</label>
+                    <label class="block text-sm font-medium">
+                        Masa Berlaku SW Tersangka <span class="text-yellow-600">(Opsional)</span>
+                    </label>
                     <input name="masa_berlaku_pkb_sw_tersangka" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                 </div>
 
                 <div class="mt-4">
-                    <label class="block text-sm font-medium">Foto Barang Bukti Tersangka</label>
+                    <label class="block text-sm font-medium">
+                        Foto Barang Bukti Tersangka <span class="text-yellow-600">(Opsional)</span>
+                    </label>
                     <input name="foto_barang_bukti_tersangka" type="file" accept="image/*" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 bg-white">
                 </div>
 
@@ -108,12 +129,16 @@
                             <h3 class="font-semibold text-base mb-4 text-[#373A3C]">Kendaraan <span x-text="index + 1"></span></h3>
 
                             <div>
-                                <label class="block text-sm font-medium">Nama Korban</label>
+                                <label class="block text-sm font-medium">
+                                    Nama Korban <span class="text-red-500">*</span>
+                                </label>
                                 <input :name="'nama_korban[]'" type="text" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium">Jenis Kendaraan</label>
+                                <label class="block text-sm font-medium">
+                                    Jenis Kendaraan Korban <span class="text-red-500">*</span>
+                                </label>
                                 <select :name="'jenis_kendaraan[]'" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                                     <option value="">Pilih Jenis Kendaraan</option>
                                     <option value="Roda 2">Roda 2</option>
@@ -124,7 +149,9 @@
                             </div>
 
                             <div x-data="nopolHandler()" class="space-y-1">
-                                <label class="block text-sm font-medium">Nomor Polisi</label>
+                                <label class="block text-sm font-medium">
+                                    Nomor Polisi Korban <span class="text-red-500">*</span>
+                                </label>
 
                                 <div x-show="!tanpaNopol">
                                     <div class="flex items-center space-x-1">
@@ -156,12 +183,16 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium">Masa Berlaku PKB/SW</label>
+                                <label class="block text-sm font-medium">
+                                    Masa Berlaku SW Korban <span class="text-yellow-600">(Opsional)</span>
+                                </label>
                                 <input :name="'masa_berlaku_pkb_sw[]'" type="date" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2">
                             </div>
 
                             <div x-data="currencyHandler()">
-                                <label class="block text-sm font-medium">Total Kerugian</label>
+                                <label class="block text-sm font-medium">
+                                    Total Kerugian Korban <span class="text-red-500">*</span>
+                                </label>
                                 <input type="hidden" :name="'total_kerugian[]'" x-model="hiddenValue">
 
                                 <input type="text" placeholder="Rp" 
@@ -173,12 +204,16 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium">Foto Barang Bukti</label>
+                                <label class="block text-sm font-medium">
+                                    Foto Barang Bukti Korban <span class="text-yellow-600">(Opsional)</span>
+                                </label>
                                 <input :name="'foto_barang_bukti[]'" type="file" accept="image/*" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 bg-white">
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium">Keterangan</label>
+                                <label class="block text-sm font-medium">
+                                    Keterangan <span class="text-yellow-600">(Opsional)</span>
+                                </label>
                                 <textarea :name="'keterangan[]'" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2"></textarea>
                             </div>
                         </div>

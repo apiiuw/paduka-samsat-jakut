@@ -18,6 +18,9 @@
                      <option value="">Semua Tahun</option>
                      <option value="2025/2026" {{ request('tahun') == '2025/2026' ? 'selected' : '' }}>2025/2026</option>
                      <option value="2024/2025" {{ request('tahun') == '2024/2025' ? 'selected' : '' }}>2024/2025</option>
+                     <option value="2023/2024" {{ request('tahun') == '2023/2024' ? 'selected' : '' }}>2023/2024</option>
+                     <option value="2022/2023" {{ request('tahun') == '2022/2023' ? 'selected' : '' }}>2022/2023</option>
+                     <option value="2021/2022" {{ request('tahun') == '2021/2022' ? 'selected' : '' }}>2021/2022</option>
                   </select>
                </div>
 
@@ -75,7 +78,7 @@
 
       <!-- Table -->
       <div class="overflow-x-auto w-full">
-         <table class="min-w-[2400px] border text-sm text-left">
+         <table class="min-w-[2500px] border text-sm text-left">
             <thead class="bg-[#373D53] text-white text-center">
                <tr>
                   <th class="border px-2 py-1">No</th>
@@ -90,11 +93,11 @@
                   <th class="border px-2 py-1">Foto Barang Bukti Tersangka</th>
                   <th class="border px-2 py-1">Status Kendaraan Tersangka</th>
                   <th class="border px-2 py-1">Nama Korban</th>
-                  <th class="border px-2 py-1">Jenis Kendaraan</th>
-                  <th class="border px-2 py-1">Nomor Polisi</th>
-                  <th class="border px-2 py-1">Masa Berlaku SW</th>
-                  <th class="border px-2 py-1">Total Kerugian</th>
-                  <th class="border px-2 py-1">Foto Barang Bukti</th>
+                  <th class="border px-2 py-1">Jenis Kendaraan Korban</th>
+                  <th class="border px-2 py-1">Nomor Polisi Korban</th>
+                  <th class="border px-2 py-1">Masa Berlaku SW Korban</th>
+                  <th class="border px-2 py-1">Total Kerugian Korban</th>
+                  <th class="border px-2 py-1">Foto Barang Bukti Korban</th>
                   <th class="border px-2 py-1">Keterangan</th>
                   <th class="border px-2 py-1">Status Kendaraan Korban</th>
                   <th class="border px-2 py-1">Status Perkara</th>

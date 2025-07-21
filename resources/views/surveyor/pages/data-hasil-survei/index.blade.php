@@ -141,7 +141,7 @@
                                             <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
                                                 onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
                                         @else
-                                            <span>-</span>
+                                            <p class="italic text-red-500">Tidak ada</p>
                                         @endif
                                     </div>
                                 </td>
@@ -164,9 +164,15 @@
                             <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
                             <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                             <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
-                            <td class="border px-2 py-1 flex justify-center whitespace-nowrap">
-                                <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                                    onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                            <td class="border px-2 py-1 whitespace-nowrap">
+                                <div class="flex justify-center px-2 py-1">
+                                    @if($item->foto_barang_bukti)
+                                        <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                            onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                                    @else
+                                        <p class="italic text-red-500">Tidak ada</p>
+                                    @endif
+                                </div>
                             </td>
 
                             <td class="border px-2 py-1 whitespace-nowrap">{{ $item->status_survei }}</td>

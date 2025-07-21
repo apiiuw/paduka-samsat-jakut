@@ -15,6 +15,9 @@
                      <option value="">Semua Tahun</option>
                      <option value="2025/2026" {{ request('tahun') == '2025/2026' ? 'selected' : '' }}>2025/2026</option>
                      <option value="2024/2025" {{ request('tahun') == '2024/2025' ? 'selected' : '' }}>2024/2025</option>
+                     <option value="2023/2024" {{ request('tahun') == '2023/2024' ? 'selected' : '' }}>2023/2024</option>
+                     <option value="2022/2023" {{ request('tahun') == '2022/2023' ? 'selected' : '' }}>2022/2023</option>
+                     <option value="2021/2022" {{ request('tahun') == '2021/2022' ? 'selected' : '' }}>2021/2022</option>
                   </select>
             </div>
 
@@ -129,8 +132,12 @@
                                     <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">Rp {{ number_format($item->estimasi_tunggakan_tersangka, 0, ',', '.') }}</td>
                                     <td class="border px-2 py-1" rowspan="{{ $rowspan }}">
                                        <div class="flex justify-center w-full">
-                                          <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                                          onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                                          @if ($item->foto_barang_bukti_tersangka)
+                                             <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                             onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
+                                          @else
+                                             <span class="italic text-red-500">Tidak ada</span>
+                                          @endif
                                        </div>
                                     </td>
                                     <form action="{{ route('jr.updateStatusTersangka', $item->id) }}" method="POST">
@@ -160,9 +167,15 @@
                                  <td class="border px-2 py-1 whitespace-nowrap">{{ $item->nomor_polisi }}</td>
                                  <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                                  <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
-                                 <td class="border px-2 py-1 flex justify-center">
-                                    <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                                       onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                                 <td class="border px-2 py-1">
+                                    <div class="flex justify-center w-full">
+                                       @if ($item->foto_barang_bukti)
+                                          <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                             onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                                       @else
+                                          <p class="italic text-red-500">Tidak ada</p>
+                                       @endif
+                                    </div>
                                  </td>
 
                                  <form action="{{ route('jr.updateStatus', $item->id) }}" method="POST">
@@ -170,13 +183,13 @@
                                     @method('PUT')
                                     <td class="border px-2 py-1 whitespace-nowrap">
                                        <select name="status_validasi" class="form-control" onchange="this.form.submit()">
-                                             <!-- Default option (empty) to prompt the user to select if they haven't already -->
-                                             <option value="" disabled {{ !$item->status_validasi ? 'selected' : '' }}>Pilih Status</option>
-                                             <option value="Jakarta Pusat" {{ $item->status_validasi == 'Jakarta Pusat' ? 'selected' : '' }}>Jakarta Pusat</option>
-                                             <option value="Jakarta Utara" {{ $item->status_validasi == 'Jakarta Utara' ? 'selected' : '' }}>Jakarta Utara</option>
-                                             <option value="Jakarta Selatan" {{ $item->status_validasi == 'Jakarta Selatan' ? 'selected' : '' }}>Jakarta Selatan</option>
-                                             <option value="Jakarta Timur" {{ $item->status_validasi == 'Jakarta Timur' ? 'selected' : '' }}>Jakarta Timur</option>
-                                             <option value="Jakarta Barat" {{ $item->status_validasi == 'Jakarta Barat' ? 'selected' : '' }}>Jakarta Barat</option>
+                                          <!-- Default option (empty) to prompt the user to select if they haven't already -->
+                                          <option value="" disabled {{ !$item->status_validasi ? 'selected' : '' }}>Pilih Status</option>
+                                          <option value="Jakarta Pusat" {{ $item->status_validasi == 'Jakarta Pusat' ? 'selected' : '' }}>Jakarta Pusat</option>
+                                          <option value="Jakarta Utara" {{ $item->status_validasi == 'Jakarta Utara' ? 'selected' : '' }}>Jakarta Utara</option>
+                                          <option value="Jakarta Selatan" {{ $item->status_validasi == 'Jakarta Selatan' ? 'selected' : '' }}>Jakarta Selatan</option>
+                                          <option value="Jakarta Timur" {{ $item->status_validasi == 'Jakarta Timur' ? 'selected' : '' }}>Jakarta Timur</option>
+                                          <option value="Jakarta Barat" {{ $item->status_validasi == 'Jakarta Barat' ? 'selected' : '' }}>Jakarta Barat</option>
                                        </select>
                                     </td>
                                  </form>

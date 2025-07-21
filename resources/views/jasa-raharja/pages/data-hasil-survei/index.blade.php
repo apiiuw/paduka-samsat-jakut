@@ -10,12 +10,15 @@
          <form action="{{ route('jr.data-hasil-survei.index') }}" method="GET" class="flex justify-between flex-wrap gap-2">
             <!-- Tahun -->
             <div class="flex items-center gap-2">
-                  <span class="text-sm text-gray-600">Tahun</span>
-                  <select name="tahun" class="border border-gray-300 rounded px-3 py-1 text-sm">
-                     <option value="">Semua Tahun</option>
-                     <option value="2025/2026" {{ request('tahun') == '2025/2026' ? 'selected' : '' }}>2025/2026</option>
-                     <option value="2024/2025" {{ request('tahun') == '2024/2025' ? 'selected' : '' }}>2024/2025</option>
-                  </select>
+               <span class="text-sm text-gray-600">Tahun</span>
+               <select name="tahun" class="border border-gray-300 rounded px-3 py-1 text-sm">
+                  <option value="">Semua Tahun</option>
+                  <option value="2025/2026" {{ request('tahun') == '2025/2026' ? 'selected' : '' }}>2025/2026</option>
+                  <option value="2024/2025" {{ request('tahun') == '2024/2025' ? 'selected' : '' }}>2024/2025</option>
+                  <option value="2023/2024" {{ request('tahun') == '2023/2024' ? 'selected' : '' }}>2023/2024</option>
+                  <option value="2022/2023" {{ request('tahun') == '2022/2023' ? 'selected' : '' }}>2022/2023</option>
+                  <option value="2021/2022" {{ request('tahun') == '2021/2022' ? 'selected' : '' }}>2021/2022</option>
+               </select>
             </div>
 
             <!-- Bulan -->
@@ -141,7 +144,7 @@
                                             <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
                                                 onclick="showPreview('{{ asset($item->foto_barang_bukti_tersangka) }}')" />
                                         @else
-                                            <span>-</span>
+                                            <p class="italic text-red-500">Tidak ada</p>
                                         @endif
                                     </div>
                                 </td>
@@ -165,8 +168,12 @@
                             <td class="border px-2 py-1 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->masa_berlaku_pkb_sw)->format('d/m/Y') }}</td>
                             <td class="border px-2 py-1 whitespace-nowrap">Rp {{ number_format($item->estimasi_tunggakan, 0, ',', '.') }}</td>
                             <td class="border px-2 py-1 flex justify-center whitespace-nowrap">
-                                <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
-                                    onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                              @if($item->foto_barang_bukti)
+                                 <img src="{{ asset($item->foto_barang_bukti) }}" class="w-12 h-12 object-cover rounded cursor-pointer"
+                                       onclick="showPreview('{{ asset($item->foto_barang_bukti) }}')" />
+                              @else
+                                 <p class="italic text-red-500">Tidak ada</p>
+                              @endif
                             </td>
 
                             <td class="border px-2 py-1 whitespace-nowrap">{{ $item->status_survei }}</td>
