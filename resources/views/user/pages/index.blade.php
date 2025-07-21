@@ -14,27 +14,37 @@
 
                 <!-- Form Data Laporan -->
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Nama Pemilik</label>
+                    <label class="block text-sm font-medium">
+                        Nama Pemilik <span class="text-red-500">*</span>
+                    </label>
                     <input name="nama_pemilik" type="text" placeholder="Ketikkan Nama Pemilik..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Alamat Sesuai Identitas</label>
+                    <label class="block text-sm font-medium">
+                        Alamat Sesuai Identitas <span class="text-red-500">*</span>
+                    </label>
                     <input name="alamat_sesuai_identitas" type="text" placeholder="Ketikkan Alamat Sesuai Identitas..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">NIK/TDP/NIB/Kitas/Kitab</label>
+                    <label class="block text-sm font-medium">
+                        NIK/TDP/NIB/Kitas/Kitab <span class="text-red-500">*</span>
+                    </label>
                     <input name="nik_tdp_nib_kitas_kitab" type="text" placeholder="Ketikkan NIK/TDP/NIB/Kitas/Kitab..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">No. Tlp/HP</label>
+                    <label class="block text-sm font-medium">
+                        No. Tlp/HP <span class="text-red-500">*</span>
+                    </label>
                     <input name="no_telp" type="number" value="" placeholder="Ketikkan No. Tlp/HP..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Email</label>
+                    <label class="block text-sm font-medium">
+                        Email <span class="text-red-500">*</span>
+                    </label>
                     <input name="email" type="email" value="" placeholder="Ketikkan Email..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
             </div>
@@ -47,72 +57,96 @@
 
                 <!-- Form Data Laporan -->
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">NRKB</label>
+                    <label class="block text-sm font-medium">
+                        NRKB <span class="text-red-500">*</span>
+                    </label>
                     <input name="nrkb_kendaraan" type="text" placeholder="Ketikkan NRKB..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Merek</label>
+                    <label class="block text-sm font-medium">
+                        Merek <span class="text-red-500">*</span>
+                    </label>
                     <input name="merek_kendaraan" type="text" placeholder="Ketikkan Merek..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Tipe</label>
+                    <label class="block text-sm font-medium">
+                        Tipe <span class="text-red-500">*</span>
+                    </label>
                     <input name="tipe_kendaraan" type="text" value="" placeholder="Ketikkan Tipe..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Jenis</label>
+                    <label class="block text-sm font-medium">
+                        Jenis <span class="text-red-500">*</span>
+                    </label>
                     <input name="jenis_kendaraan" type="text" value="" placeholder="Ketikkan Jenis..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Model</label>
+                    <label class="block text-sm font-medium">
+                        Model <span class="text-red-500">*</span>
+                    </label>
                     <input name="model_kendaraan" type="text" value="" placeholder="Ketikkan Model..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Tahun Pembuatan</label>
+                    <label class="block text-sm font-medium">
+                        Tahun Pembuatan <span class="text-red-500">*</span>
+                    </label>
                     <input name="tahun_pembuatan_kendaraan" type="number" value="" placeholder="Ketikkan Tahun Pembuatan..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Isi Silinder / Daya Listrik</label>
+                    <label class="block text-sm font-medium">
+                        Isi Silinder / Daya Listrik <span class="text-red-500">*</span>
+                    </label>
                     <input name="isi_silinder_daya_listrik_kendaraan" type="text" value="" placeholder="Ketikkan Isi Silinder / Daya Listrik..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Nomor Rangka</label>
+                    <label class="block text-sm font-medium">Nomor Rangka <span class="text-red-500">*</span></label>
                     <input name="nomor_rangka_kendaraan" type="text" value="" placeholder="Ketikkan Nomor Rangka..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Nomor Mesin</label>
+                    <label class="block text-sm font-medium">
+                        Nomor Mesin <span class="text-red-500">*</span>
+                    </label>
                     <input name="nomor_mesin_kendaraan" type="text" value="" placeholder="Ketikkan Nomor Mesin..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Warna Kendaraan Bermotor</label>
+                    <label class="block text-sm font-medium">
+                        Warna Kendaraan Bermotor <span class="text-red-500">*</span>
+                    </label>
                     <input name="warna_kendaraan" type="text" value="" placeholder="Ketikkan Warna Kendaraan Bermotor..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Bahan Bakar / Sumber Energi</label>
+                    <label class="block text-sm font-medium">
+                        Bahan Bakar / Sumber Energi <span class="text-red-500">*</span>
+                    </label>
                     <input name="bahan_bakar_sumber_energi_kendaraan" type="text" value="" placeholder="Ketikkan Bahan Bakar / Sumber Energi..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Warna TNKB</label>
+                    <label class="block text-sm font-medium">
+                        Warna TNKB <span class="text-red-500">*</span>
+                    </label>
                     <input name="warna_tnkb_kendaraan" type="text" value="" placeholder="Ketikkan Warna TNKB..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Nomor BPKB</label>
+                    <label class="block text-sm font-medium">
+                        Nomor BPKB <span class="text-red-500">*</span>
+                    </label>
                     <input name="nomor_bpkb_kendaraan" type="text" value="" placeholder="Ketikkan Nomor BPKB..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-sm font-medium">Alasan permohonan <strong>Penghapusan Regident Ranmor</strong> karena</label>
+                    <label class="block text-sm font-medium">Alasan permohonan <strong>Penghapusan Regident Ranmor</strong> karena <span class="text-red-500">*</span></label>
                     <textarea name="alasan_permohonan" type="text" value="" placeholder="Ketikkan Alasan Permohonan..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"></textarea>
                 </div>
 

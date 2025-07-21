@@ -16,27 +16,37 @@
 
                 <!-- Form Data Laporan -->
                 <div>
-                    <label class="block text-sm font-medium">Nama Surveyor</label>
+                    <label class="block text-sm font-medium">
+                        Nama Surveyor <span class="text-red-500">*</span>
+                    </label>
                     <input name="nama_surveyor" type="text" placeholder="Ketikkan Nama Surveyor..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Loket Surveyor</label>
+                    <label class="block text-sm font-medium">
+                        Loket Surveyor <span class="text-red-500">*</span>
+                    </label>
                     <input name="loket_surveyor" type="text" placeholder="Ketikkan Loket Surveyor..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Nama Pemilik KBM</label>
+                    <label class="block text-sm font-medium">
+                        Nama Pemilik KBM <span class="text-red-500">*</span>
+                    </label>
                     <input name="nama_pemilik_kbm" type="text" placeholder="Ketikkan Nama Pemilik KBM..." class="placeholder:text-gray-500 placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Nomor Polisi KBM</label>
+                    <label class="block text-sm font-medium">
+                        Nomor Polisi KBM <span class="text-red-500">*</span>
+                    </label>
                     <input name="nopol_kbm" type="text" value="{{ $data->nomor_polisi }}" readonly placeholder="Ketikkan Nomor Polisi KBM..." class="placeholder:text-gray-500 cursor-not-allowed placeholder:normal-case mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Jenis KBM</label>
+                    <label class="block text-sm font-medium">
+                        Jenis KBM <span class="text-red-500">*</span>
+                    </label>
                     <select class="mt-1 text-sm w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 text-gray-700 cursor-not-allowed"
                             disabled>
                         <option value="">Pilih Jenis KBM</option>
@@ -58,7 +68,7 @@
 
                         <div>
                             <label class="block text-sm font-medium mb-2">
-                                Apakah anda pemilik KBM dengan nomor polisi (nomor polisi)?
+                                Apakah anda pemilik KBM dengan nomor polisi (nomor polisi)? <span class="text-red-500">*</span>
                             </label>
                             <div class="flex items-center space-x-4">
                                 <label class="inline-flex items-center">
@@ -74,7 +84,7 @@
 
                         <div>
                             <label class="block text-sm font-medium mb-2">
-                                Apakah anda bersedia untuk melakukan pelunasan PKB/SW?
+                                Apakah anda bersedia untuk melakukan pelunasan PKB/SW? <span class="text-red-500">*</span>
                             </label>
                             <div class="flex items-center space-x-4">
                                 <label class="inline-flex items-center">
@@ -92,7 +102,7 @@
 
                         <div id="pertanyaan-3" class="mt-4 hidden">
                             <label class="block text-sm font-medium mb-2">
-                                Apakah anda bersedia untuk mengajukan penghapusan data KBM milik anda?
+                                Apakah anda bersedia untuk mengajukan penghapusan data KBM milik anda? <span class="text-red-500">*</span>
                             </label>
                             <div class="flex items-center space-x-4">
                                 <label class="inline-flex items-center">
@@ -107,7 +117,9 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium">Foto Pemilik KBM</label>
+                            <label class="block text-sm font-medium">
+                                Foto Pemilik KBM <span class="text-red-500">*</span>
+                            </label>
                             <input name="foto_pemilik_kbm" type="file" accept="image/*" class="placeholder:text-gray-500 mt-1 text-sm w-full border border-gray-300 rounded py-1 bg-white">
                         </div>
 
