@@ -78,7 +78,7 @@
 
       <!-- Table -->
       <div class="overflow-x-auto w-full">
-         <table class="min-w-[2500px] border text-sm text-left">
+         <table class="min-w-[2600px] border text-sm text-left">
             <thead class="bg-[#373D53] text-white text-center">
                <tr>
                   <th class="border px-2 py-1">No</th>
@@ -117,13 +117,13 @@
                         @if ($index == 0)
                            <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $no++ }}</td>
                            <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->laporan_polisi }}</td>
-                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
-                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
-                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->kode_penyidik }}</td>
-                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->nama_tersangka }}</td>
-                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->jenis_kendaraan_tersangka }}</td>
-                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->nomor_polisi_tersangka }}</td>
-                           <td class="border px-2 py-1" rowspan="{{ $rowspan }}">{{ $item->masa_berlaku_pkb_sw_tersangka }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->format('d/m/Y') }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d/m/Y') }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->kode_penyidik }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->nama_tersangka }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->jenis_kendaraan_tersangka }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->nomor_polisi_tersangka }}</td>
+                           <td class="border px-2 py-1 whitespace-nowrap" rowspan="{{ $rowspan }}">{{ $item->masa_berlaku_pkb_sw_tersangka }}</td>
                            <td class="border px-2 py-1" rowspan="{{ $rowspan }}">
                               @if ($item->foto_barang_bukti_tersangka)
                                  <img src="{{ asset($item->foto_barang_bukti_tersangka) }}" class="w-12 h-12 object-cover rounded cursor-pointer mx-auto"
